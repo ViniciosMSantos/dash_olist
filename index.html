@@ -1,0 +1,1648 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..900&display=swap" rel="stylesheet">
+  <?!= include('Stylesheet'); ?>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+</head>
+<body>
+  <div class="app">
+    <nav class="sidebar">
+      <div class="sidebar-title">olist</div>
+      <button class="nav-item active" data-view="overview">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+        Visão Geral
+      </button>
+      <button class="nav-item" data-view="receita">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg>
+        Receita &amp; Performance
+      </button>
+      <button class="nav-item" data-view="vendas">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+        Vendas
+      </button>
+      <button class="nav-item" data-view="logistica">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 3h15v13H1z"></path><path d="M16 8h4l3 3v5h-7V8Z"></path><circle cx="5.5" cy="18.5" r="1.8"></circle><circle cx="18.5" cy="18.5" r="1.8"></circle></svg>
+        Logística
+      </button>
+      <button class="nav-item" data-view="satisfacao">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15 9 22 9.5 17 14.5 18.5 22 12 18 5.5 22 7 14.5 2 9.5 9 9 12 2"></polygon></svg>
+        Satisfação
+      </button>
+
+      <div class="sidebar-spacer"></div>
+
+      <div class="sidebar-user" id="sidebar-user"></div>
+      <div class="sidebar-footer" id="sidebar-footer"></div>
+    </nav>
+
+    <main class="content">
+    <div class="perguntas-barra">
+          <div class="perguntas-wrap">
+            <button type="button" class="perguntas-btn" id="perguntas-btn" aria-expanded="false"><span class="perguntas-btn-icone">?</span>Perguntas deste dashboard<span class="perguntas-btn-seta">▾</span></button>
+            <div class="perguntas-painel" id="perguntas-painel" hidden>
+            <div class="perguntas-grupo">
+              <div class="perguntas-grupo-titulo">Visão Geral</div>
+              <button type="button" class="pergunta-item" data-view="overview" data-alvo="#etapa-1"><span class="pergunta-num">01</span>Como está o negócio?</button>
+              <button type="button" class="pergunta-item" data-view="overview" data-alvo="#etapa-2"><span class="pergunta-num">02</span>O que merece atenção?</button>
+              <button type="button" class="pergunta-item" data-view="overview" data-alvo="#etapa-3"><span class="pergunta-num">03</span>Como está o resultado?</button>
+              <button type="button" class="pergunta-item" data-view="overview" data-alvo="#etapa-4"><span class="pergunta-num">04</span>O que está gerando o resultado?</button>
+              <button type="button" class="pergunta-item" data-view="overview" data-alvo="#etapa-5"><span class="pergunta-num">05</span>A operação sustenta as vendas?</button>
+              <button type="button" class="pergunta-item" data-view="overview" data-alvo="#etapa-6"><span class="pergunta-num">06</span>Como o cliente percebe isso?</button>
+              <button type="button" class="pergunta-item" data-view="overview" data-alvo="#etapa-7"><span class="pergunta-num">→</span>Onde investigar agora?</button>
+            </div>
+            <div class="perguntas-grupo">
+              <div class="perguntas-grupo-titulo">Receita &amp; Performance</div>
+              <button type="button" class="pergunta-item" data-view="receita" data-alvo="#receita-etapa-1"><span class="pergunta-num">01</span>Como está a evolução financeira?</button>
+              <button type="button" class="pergunta-item" data-view="receita" data-alvo="#receita-etapa-2"><span class="pergunta-num">02</span>Quais categorias estão movimentando o faturamento?</button>
+              <button type="button" class="pergunta-item" data-view="receita" data-alvo="#receita-etapa-3"><span class="pergunta-num">03</span>Quais categorias sustentam o faturamento e como?</button>
+              <button type="button" class="pergunta-item" data-view="receita" data-alvo="#receita-etapa-4"><span class="pergunta-num">04</span>Onde estão as maiores mudanças?</button>
+              <button type="button" class="pergunta-item" data-view="receita" data-alvo="#receita-etapa-5"><span class="pergunta-num">05</span>Como está a composição do faturamento?</button>
+              <button type="button" class="pergunta-item" data-view="receita" data-alvo="#receita-etapa-6"><span class="pergunta-num">06</span>Como as categorias geram receita?</button>
+            </div>
+            <div class="perguntas-grupo">
+              <div class="perguntas-grupo-titulo">Vendas</div>
+              <button type="button" class="pergunta-item" data-view="vendas" data-alvo="#vendas-etapa-0"><span class="pergunta-num">00</span>Como está o cenário comercial?</button>
+              <button type="button" class="pergunta-item" data-view="vendas" data-alvo="#vendas-etapa-1"><span class="pergunta-num">01</span>Como a geração de vendas está distribuída?</button>
+              <button type="button" class="pergunta-item" data-view="vendas" data-alvo="#vendas-etapa-2"><span class="pergunta-num">02</span>Como os vendedores estão performando entre si?</button>
+              <button type="button" class="pergunta-item" data-view="vendas" data-alvo="#vendas-etapa-3"><span class="pergunta-num">03</span>Como as carteiras de clientes estão distribuídas?</button>
+              <button type="button" class="pergunta-item" data-view="vendas" data-alvo="#vendas-etapa-4"><span class="pergunta-num">04</span>Como está o comportamento da base de clientes?</button>
+              <button type="button" class="pergunta-item" data-view="vendas" data-alvo="#vendas-etapa-5"><span class="pergunta-num">05</span>Onde estão os principais mercados de venda?</button>
+              <button type="button" class="pergunta-item" data-view="vendas" data-alvo="#vendas-etapa-6"><span class="pergunta-num">06</span>Como diferentes perfis de clientes contribuem para as vendas?</button>
+              <button type="button" class="pergunta-item" data-view="vendas" data-alvo="#vendas-etapa-7"><span class="pergunta-num">07</span>Quão concentrado está o resultado comercial?</button>
+              <button type="button" class="pergunta-item" data-view="vendas" data-alvo="#vendas-etapa-8"><span class="pergunta-num">08</span>Onde estão os principais pontos para investigação comercial?</button>
+            </div>
+            <div class="perguntas-grupo">
+              <div class="perguntas-grupo-titulo">Logística</div>
+              <button type="button" class="pergunta-item" data-view="logistica" data-alvo="#logistica-etapa-1"><span class="pergunta-num">01</span>Como a operação está evoluindo?</button>
+              <button type="button" class="pergunta-item" data-view="logistica" data-alvo="#logistica-etapa-2"><span class="pergunta-num">02</span>Estamos cumprindo o que prometemos?</button>
+              <button type="button" class="pergunta-item" data-view="logistica" data-alvo="#logistica-etapa-3"><span class="pergunta-num">03</span>Onde está o gargalo do processo?</button>
+              <button type="button" class="pergunta-item" data-view="logistica" data-alvo="#logistica-etapa-4"><span class="pergunta-num">04</span>Onde a operação vai melhor e pior?</button>
+              <button type="button" class="pergunta-item" data-view="logistica" data-alvo="#logistica-etapa-5"><span class="pergunta-num">05</span>Quanto custa entregar e o que o cliente recebe?</button>
+              <button type="button" class="pergunta-item" data-view="logistica" data-alvo="#logistica-etapa-6"><span class="pergunta-num">06</span>Há pedidos parados agora?</button>
+              <button type="button" class="pergunta-item" data-view="logistica" data-alvo="#logistica-etapa-7"><span class="pergunta-num">07</span>Onde estão os principais pontos de investigação?</button>
+            </div>
+            <div class="perguntas-grupo">
+              <div class="perguntas-grupo-titulo">Satisfação</div>
+              <button type="button" class="pergunta-item" data-view="satisfacao" data-alvo="#satisfacao-etapa-1"><span class="pergunta-num">01</span>Estamos melhorando ou piorando?</button>
+              <button type="button" class="pergunta-item" data-view="satisfacao" data-alvo="#satisfacao-etapa-2"><span class="pergunta-num">02</span>Como estão distribuídas as experiências?</button>
+              <button type="button" class="pergunta-item" data-view="satisfacao" data-alvo="#satisfacao-etapa-3"><span class="pergunta-num">03</span>Onde está a insatisfação?</button>
+              <button type="button" class="pergunta-item" data-view="satisfacao" data-alvo="#satisfacao-etapa-4"><span class="pergunta-num">04</span>O que está associado à percepção do cliente?</button>
+              <button type="button" class="pergunta-item" data-view="satisfacao" data-alvo="#satisfacao-etapa-5"><span class="pergunta-num">05</span>Qual é o tamanho do problema?</button>
+              <button type="button" class="pergunta-item" data-view="satisfacao" data-alvo="#satisfacao-etapa-6"><span class="pergunta-num">06</span>O que CX precisa explicar?</button>
+            </div>
+          </div>
+          </div>
+        </div>
+
+
+      <section id="view-overview" class="view active">
+        <div class="page-header">
+          <h1>Visão Geral</h1>
+          <div class="topbar">
+            <label for="mes-selector">Período</label>
+            <select id="mes-selector"></select>
+          </div>
+        </div>
+
+        <div class="story">
+          <div class="story-etapa" id="etapa-1">
+        <div id="kpi-row" class="kpi-row">
+          <div class="kpi-card skeleton"></div>
+          <div class="kpi-card skeleton"></div>
+          <div class="kpi-card skeleton"></div>
+          <div class="kpi-card skeleton"></div>
+        </div>
+          </div>
+
+          <div class="story-etapa" id="etapa-2">
+          <div class="chart-card chart-card--wide">
+            <div class="chart-card-header chart-card-header--historia">
+              <div class="chart-card-header-title">
+                <h2>Principais pontos de atenção</h2>
+                <span class="info-tip" tabindex="0">i
+                  <span class="info-tip-panel">
+                    <b>Como funciona esse ranking</b>
+                    <ul>
+                      <li><b>O que entra</b> — KPIs que caíram, ou que cresceram bem abaixo do próprio padrão histórico (mesmo sem cair).</li>
+                      <li><b>Magnitude</b> — o quanto o KPI piorou (ou desacelerou) vs. o período anterior.</li>
+                      <li><b>Importância</b> — KPIs com mais impacto no negócio (ex.: receita) pesam mais que métricas secundárias (ex.: ticket médio).</li>
+                      <li><b>Persistência</b> — pioras que se repetem por vários períodos seguidos pesam mais que um caso isolado.</li>
+                    </ul>
+                    Os 5 KPIs com maior pontuação aparecem aqui — não necessariamente os de maior queda % isolada.
+                  </span>
+                </span>
+              </div>
+              <div class="story-centro"><span class="story-mini"><span class="story-num">02</span><span class="story-pergunta">O que merece atenção?</span></span></div>
+              <button class="table-toggle" data-chart="preocupacoes">Ver tabela</button>
+            </div>
+            <div class="chart-card-caption chart-card-caption--faturamento" id="preocupacoes-caption">Vs. período anterior — considera apenas pedidos entregues/faturados</div>
+            <div class="chart-legend">
+              <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--critico"></span>Crítico (2 maiores)</div>
+              <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--atencao"></span>Atenção</div>
+            </div>
+            <div class="chart-visual chart-visual--curto" data-visual="preocupacoes">
+              <canvas id="chart-preocupacoes"></canvas>
+            </div>
+            <p class="preocupacoes-vazio" id="preocupacoes-vazio" hidden>Nenhuma métrica piorou em relação ao período anterior.</p>
+            <div class="chart-card-caption">A cor indica a severidade (posição no ranking), não a direção — todo item aqui já é uma piora vs. o período anterior.</div>
+            <div class="data-table-wrap" id="table-preocupacoes" hidden></div>
+          </div>
+          </div>
+
+          <div class="story-etapa" id="etapa-3">
+          <div class="chart-card chart-card--wide">
+            <div class="chart-card-header chart-card-header--historia">
+              <div class="chart-card-header-title">
+                <h2>Evolução mensal de faturamento, custo e margem</h2>
+                <span class="info-tip" tabindex="0">i
+                  <span class="info-tip-panel">
+                    <b>Como ler este gráfico</b>
+                    <ul>
+                      <li><b>Barras verdes</b> — faturamento de produtos do mês (sem frete).</li>
+                      <li><b>Barras vermelhas</b> — custo de frete do mês.</li>
+                      <li><b>Linha azul</b> — margem: receita líquida (produtos) ÷ faturamento total (produtos + frete). Não é margem de lucro, porque os dados não têm o custo do produto.</li>
+                      <li>Passe o mouse para ver o valor e a variação vs. o mês anterior; clique na legenda para isolar uma série.</li>
+                    </ul>
+                  </span>
+                </span>
+              </div>
+              <div class="story-centro"><span class="story-mini"><span class="story-num">03</span><span class="story-pergunta">Como está o resultado?</span></span></div>
+              <button class="table-toggle" data-chart="evolucao-margem">Ver tabela</button>
+            </div>
+            <div class="chart-card-caption chart-card-caption--faturamento">Considera apenas pedidos entregues/faturados</div>
+            <div class="chart-legend" id="evolucao-margem-legend">
+              <button class="chart-legend-item chart-legend-item--clicavel" data-dataset-index="0"><span class="chart-legend-swatch chart-legend-swatch--verde"></span>Faturamento (produtos)</button>
+              <button class="chart-legend-item chart-legend-item--clicavel" data-dataset-index="1"><span class="chart-legend-swatch chart-legend-swatch--vermelho"></span>Custo (frete)</button>
+              <button class="chart-legend-item chart-legend-item--clicavel" data-dataset-index="2"><span class="chart-legend-swatch chart-legend-swatch--margem"></span>Margem</button>
+            </div>
+            <div class="chart-visual chart-visual--curto" data-visual="evolucao-margem">
+              <canvas id="chart-evolucao-margem"></canvas>
+            </div>
+            <div class="data-table-wrap" id="table-evolucao-margem" hidden></div>
+          </div>
+          </div>
+
+          <div class="story-etapa" id="etapa-4">
+            <div class="story-step"><span class="story-mini"><span class="story-num">04</span><span class="story-pergunta">O que está gerando o resultado?</span></span></div>
+          <div class="story-pilha">
+          <div class="chart-card chart-card--wide">
+            <div class="chart-card-header">
+              <div class="chart-card-header-title">
+                <h2>Volume × ticket: o que explicou a variação do faturamento</h2>
+                <span class="info-tip" tabindex="0">i
+                  <span class="info-tip-panel info-tip-panel--largo">
+                    <b>O que este gráfico quer dizer</b>
+                    <div class="tip-texto">Responde a uma pergunta: <b>o faturamento mudou porque vendemos mais (ou menos) pedidos, ou porque cada pedido passou a valer mais (ou menos)?</b> O faturamento é pedidos × ticket médio, então a mudança vem de uma dessas duas causas — ou das duas.</div>
+                    <b>Como ler</b>
+                    <ul>
+                      <li><b>Efeito volume (azul)</b> — quanto o faturamento mudou por causa da quantidade de pedidos, mantendo o ticket do mês anterior.</li>
+                      <li><b>Efeito ticket (laranja)</b> — quanto mudou por causa do valor médio de cada pedido, sobre os pedidos do mês.</li>
+                      <li><b>Linha tracejada</b> — variação total do faturamento vs. o mês anterior: é exatamente a soma das duas barras (azul + laranja).</li>
+                      <li>Barras acima de zero aumentaram o faturamento; abaixo de zero, reduziram. O valor de cada efeito está acima (ou abaixo) da barra; sob cada mês, a variação total (em R$).</li>
+                      <li><b>Exemplo:</b> 100 pedidos de R$ 200 (R$ 20 mil) viram 110 pedidos de R$ 190 (R$ 20,9 mil). Volume: +10 pedidos × R$ 200 = +R$ 2 mil. Ticket: −R$ 10 × 110 pedidos = −R$ 1,1 mil. Total: +R$ 0,9 mil.</li>
+                    </ul>
+                  </span>
+                </span>
+              </div>
+              <button class="table-toggle" data-chart="ov-volume-ticket">Ver tabela</button>
+            </div>
+            <div class="chart-legend">
+              <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--azul"></span>Efeito volume (mais ou menos pedidos)</div>
+              <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--laranja"></span>Efeito ticket (pedido mais caro ou mais barato)</div>
+              <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--line"></span>Variação total (valor abaixo de cada mês)</div>
+            </div>
+            <div class="chart-visual chart-visual--curto" data-visual="ov-volume-ticket">
+              <canvas id="chart-ov-volume-ticket"></canvas>
+            </div>
+            <div class="data-table-wrap" id="table-ov-volume-ticket" hidden></div>
+          </div>
+            <div class="chart-card">
+              <div class="chart-card-header">
+                <div class="chart-card-header-title">
+                <h2>Evolução mensal de pedidos e recompra</h2>
+                <span class="info-tip" tabindex="0">i
+                  <span class="info-tip-panel">
+                    <b>Como ler este gráfico</b>
+                    <ul>
+                      <li><b>Barras</b> — pedidos entregues/faturados no mês.</li>
+                      <li><b>Linha laranja</b> — taxa de recompra: % dos clientes do mês que fizeram 2 ou mais pedidos dentro do próprio mês. O cliente é identificado pelo id único, mas compras em meses diferentes não contam.</li>
+                      <li>Por isso o valor costuma ser baixo; vale olhar a tendência, não o número isolado.</li>
+                      <li>Passe o mouse para ver a variação vs. o mês anterior.</li>
+                    </ul>
+                  </span>
+                </span>
+              </div>
+                <button class="table-toggle" data-chart="volume-retencao">Ver tabela</button>
+              </div>
+              <div class="chart-card-caption chart-card-caption--faturamento">Considera apenas pedidos entregues/faturados</div>
+              <div class="chart-legend">
+                <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--azul"></span>Pedidos</div>
+                <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--laranja"></span>Taxa de recompra (clientes com 2+ pedidos no mês)</div>
+              </div>
+              <div class="chart-visual chart-visual--curto" data-visual="volume-retencao">
+                <canvas id="chart-volume-retencao"></canvas>
+              </div>
+              <div class="data-table-wrap" id="table-volume-retencao" hidden></div>
+            </div>
+          </div>
+          </div>
+
+          <div class="story-etapa" id="etapa-5">
+          <div class="chart-card chart-card--wide">
+            <div class="chart-card-header chart-card-header--historia">
+              <div class="chart-card-header-title">
+                <h2>Envio × entrega × atraso</h2>
+                <span class="info-tip" tabindex="0">i
+                  <span class="info-tip-panel">
+                    <b>Como ler este gráfico</b>
+                    <ul>
+                      <li><b>Barras âmbar</b> — tempo médio até o pedido ser enviado à transportadora, em dias.</li>
+                      <li><b>Barras azuis</b> — prazo médio até a entrega ao cliente, em dias.</li>
+                      <li><b>Linha vermelha</b> — taxa de atraso: % dos pedidos do mês entregues fora do prazo prometido.</li>
+                      <li>Compare com o volume da etapa anterior: se os pedidos sobem e o envio ou a entrega sobem junto, a operação está sob pressão.</li>
+                    </ul>
+                  </span>
+                </span>
+              </div>
+              <div class="story-centro"><span class="story-mini"><span class="story-num">05</span><span class="story-pergunta">A operação sustenta as vendas?</span></span></div>
+              <button class="table-toggle" data-chart="operacao">Ver tabela</button>
+            </div>
+            <div class="chart-card-caption chart-card-caption--faturamento">Considera todos os pedidos do mês (não só os entregues/faturados)</div>
+            <div class="chart-legend">
+              <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--ambar"></span>Tempo até envio (dias)</div>
+              <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--azul"></span>Prazo de entrega (dias)</div>
+              <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--vermelho"></span>Taxa de atraso</div>
+            </div>
+            <div class="chart-visual chart-visual--curto" data-visual="operacao">
+              <canvas id="chart-operacao"></canvas>
+            </div>
+            <div class="data-table-wrap" id="table-operacao" hidden></div>
+          </div>
+          </div>
+
+          <div class="story-etapa" id="etapa-6">
+            <div class="story-step"><span class="story-mini"><span class="story-num">06</span><span class="story-pergunta">Como o cliente percebe isso?</span></span></div>
+          <div class="story-cliente">
+            <div class="kpi-coluna" id="cliente-kpi-row">
+              <div class="kpi-card skeleton"></div>
+              <div class="kpi-card skeleton"></div>
+              <div class="kpi-card skeleton"></div>
+            </div>
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <div class="chart-card-header-title">
+                <h2>Experiência do cliente: taxa de atraso × nota média</h2>
+                <span class="info-tip" tabindex="0">i
+                  <span class="info-tip-panel">
+                    <b>Como ler este gráfico</b>
+                    <ul>
+                      <li><b>Linha vermelha</b> — taxa de atraso: % dos pedidos do mês com entrega atrasada.</li>
+                      <li><b>Linha azul</b> — nota média das avaliações dos pedidos do mês (de 1 a 5).</li>
+                      <li>As duas linhas usam escalas separadas e ficam em faixas diferentes do gráfico (atraso embaixo, nota em cima): a distância entre elas não significa nada. Compare o sentido — atraso subindo enquanto a nota cai indica que a logística está pesando na satisfação.</li>
+                    </ul>
+                  </span>
+                </span>
+              </div>
+              <button class="table-toggle" data-chart="experiencia-cliente">Ver tabela</button>
+            </div>
+            <div class="chart-card-caption chart-card-caption--faturamento">Atraso considera todos os pedidos do mês; nota média, as avaliações dos pedidos do mês</div>
+            <div class="chart-legend">
+              <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--vermelho"></span>Taxa de atraso</div>
+              <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--marca"></span>Nota média</div>
+            </div>
+            <div class="chart-visual chart-visual--curto" data-visual="experiencia-cliente">
+              <canvas id="chart-experiencia-cliente"></canvas>
+            </div>
+            <div class="data-table-wrap" id="table-experiencia-cliente" hidden></div>
+          </div>
+          </div>
+          </div>
+
+          <div class="story-etapa" id="etapa-7">
+            <div class="chart-card chart-card--wide chart-card--areas chart-card--areas-largo">
+              <div class="chart-card-header chart-card-header--historia">
+                <div class="chart-card-header-title">
+                <h2>Resumo por área</h2>
+                <span class="info-tip" tabindex="0">i
+                  <span class="info-tip-panel">
+                    <b>Como ler este gráfico</b>
+                    <ul>
+                      <li>Cada bloco mostra dois indicadores da área, a variação vs. o mês anterior e a evolução dos últimos 12 meses (o ponto final é verde se melhorou e vermelho se piorou).</li>
+                      <li><b>Vendas</b> — pedidos e receita por cliente (receita total ÷ clientes distintos).</li>
+                      <li><b>Logística</b> — prazo de entrega e tempo até o envio, em dias.</li>
+                      <li><b>Satisfação</b> — % de avaliações negativas (nota 1 ou 2) e de avaliações 5 estrelas.</li>
+                      <li>Clique num bloco para abrir a visão completa.</li>
+                    </ul>
+                  </span>
+                </span>
+              </div>
+              <div class="story-centro"><span class="story-mini"><span class="story-num">→</span><span class="story-pergunta">Onde investigar agora?</span></span></div>
+              </div>
+              <div class="chart-card-caption chart-card-caption--faturamento">Sinais de atenção por área (do ranking da etapa 02) — clique numa área para abrir a investigação completa</div>
+              <div class="area-resumo-lista" id="area-resumo-lista"></div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <section id="view-receita" class="view">
+        <div class="page-header">
+          <h1>Receita &amp; Performance</h1>
+          <div class="topbar">
+            <label for="receita-mes-selector">Período</label>
+            <select id="receita-mes-selector"></select>
+          </div>
+        </div>
+
+        <div class="story">
+          <div class="story-etapa" id="receita-etapa-1">
+            <div id="receita-kpi-row" class="kpi-row">
+              <div class="kpi-card skeleton"></div>
+              <div class="kpi-card skeleton"></div>
+              <div class="kpi-card skeleton"></div>
+              <div class="kpi-card skeleton"></div>
+              <div class="kpi-card skeleton"></div>
+            </div>
+            <div class="story-pilha">
+              <div class="chart-row-split">
+            <div class="chart-card">
+              <div class="chart-card-header">
+                <div class="chart-card-header-title">
+                  <h2>Receita líquida</h2>
+                  <span class="info-tip" tabindex="0">i
+                    <span class="info-tip-panel">
+                      <b>O que este gráfico quer dizer</b>
+                      <div class="tip-texto">Responde a uma pergunta: <b>quanto faturamos por mês e como isso vem evoluindo?</b></div>
+                      <b>Como ler</b>
+                      <ul>
+                        <li><b>Barras</b> — faturamento de produtos do mês (sem frete); a barra do mês selecionado fica em destaque.</li>
+                        <li><b>Linha tracejada</b> — variação % vs. o mês anterior: verde subiu, vermelho caiu.</li>
+                      </ul>
+                    </span>
+                  </span>
+                </div>
+                <button class="table-toggle" data-chart="receita-faturamento">Ver tabela</button>
+              </div>
+              <div class="chart-card-caption chart-card-caption--faturamento">Considera apenas pedidos entregues/faturados</div>
+              <div class="chart-visual chart-visual--curto" data-visual="receita-faturamento">
+                <canvas id="chart-receita-faturamento"></canvas>
+              </div>
+              <div class="data-table-wrap" id="table-receita-faturamento" hidden></div>
+            </div>
+            <div class="chart-card">
+              <div class="chart-card-header">
+                <div class="chart-card-header-title">
+                  <h2>Custo de frete</h2>
+                  <span class="info-tip" tabindex="0">i
+                    <span class="info-tip-panel">
+                      <b>O que este gráfico quer dizer</b>
+                      <div class="tip-texto">Responde a uma pergunta: <b>quanto gastamos com frete por mês e como isso vem evoluindo?</b> Frete é o único custo que os dados trazem.</div>
+                      <b>Como ler</b>
+                      <ul>
+                        <li><b>Barras</b> — custo de frete do mês; a barra do mês selecionado fica em destaque.</li>
+                        <li><b>Linha tracejada</b> — variação % vs. o mês anterior: verde subiu, vermelho caiu (aqui, subir o custo é uma piora, mesmo aparecendo em verde: a cor só indica o sentido).</li>
+                      </ul>
+                    </span>
+                  </span>
+                </div>
+                <button class="table-toggle" data-chart="receita-custo">Ver tabela</button>
+              </div>
+              <div class="chart-card-caption chart-card-caption--faturamento">Considera apenas pedidos entregues/faturados</div>
+              <div class="chart-visual chart-visual--curto" data-visual="receita-custo">
+                <canvas id="chart-receita-custo"></canvas>
+              </div>
+              <div class="data-table-wrap" id="table-receita-custo" hidden></div>
+            </div>
+              </div>
+            <div class="chart-card chart-card--wide">
+              <div class="chart-card-header">
+                <div class="chart-card-header-title">
+                  <h2>Receita líquida ÷ faturamento total</h2>
+                  <span class="info-tip" tabindex="0">i
+                    <span class="info-tip-panel">
+                      <b>O que este gráfico quer dizer</b>
+                      <div class="tip-texto">Responde a uma pergunta: <b>quanto do faturamento total é receita líquida, e isso se mantém ao longo do tempo?</b> Faturamento total = produtos + frete; receita líquida = só os produtos. A fatia que sobra é o frete cobrado.</div>
+                      <b>Como ler</b>
+                      <ul>
+                        <li><b>Linha</b> — % do faturamento total que é receita líquida em cada mês. Se a linha cai, o frete está pesando mais no total.</li>
+                        <li>Passe o mouse para ver a variação em pontos percentuais (p.p.) vs. o mês anterior e os valores em R$.</li>
+                      </ul>
+                    </span>
+                  </span>
+                </div>
+                <button class="table-toggle" data-chart="receita-margem">Ver tabela</button>
+              </div>
+              <div class="chart-card-caption chart-card-caption--faturamento">Considera apenas pedidos entregues/faturados</div>
+              <div class="chart-visual chart-visual--curto" data-visual="receita-margem">
+                <canvas id="chart-receita-margem"></canvas>
+              </div>
+              <div class="data-table-wrap" id="table-receita-margem" hidden></div>
+            </div>
+            </div>
+          </div>
+
+          <div class="story-etapa" id="receita-etapa-2">
+            <div class="chart-card chart-card--wide">
+              <div class="chart-card-header chart-card-header--historia">
+                <div class="chart-card-header-title">
+                  <h2>Categorias que mais mudaram o faturamento</h2>
+                  <span class="info-tip" tabindex="0">i
+                    <span class="info-tip-panel info-tip-panel--largo">
+                      <b>O que este gráfico quer dizer</b>
+                      <div class="tip-texto">Responde a uma pergunta: <b>quais categorias estão movimentando o faturamento vs. o mês anterior?</b> Os dados não trazem o nome do produto, então a análise é por categoria.</div>
+                      <b>Como ler</b>
+                      <ul>
+                        <li>Cada coluna é uma categoria. <b>Acima de zero</b> aumentou o faturamento; <b>abaixo de zero</b> reduziu.</li>
+                        <li>Em <b>Medir por</b> você escolhe o que a altura representa: <b>Valor (R$)</b> — quanto o faturamento da categoria mudou em reais (o padrão, porque uma categoria que vai de R$ 1 mil para R$ 5 mil não pode parecer mais importante que outra que cai de R$ 500 mil para R$ 400 mil); <b>Crescimento (%)</b> — a variação relativa, só para categorias com pelo menos 1% do faturamento em algum dos dois meses; <b>Participação (p.p.)</b> — quanto a categoria ganhou ou perdeu de espaço no faturamento total, em pontos percentuais.</li>
+                        <li>Mostra 10 categorias. Por padrão, as 5 maiores altas e as 5 maiores quedas; os botões <b>Altas</b> e <b>Quedas</b> mostram as 10 maiores de um lado só.</li>
+                        <li>Passe o mouse para ver faturamento atual e anterior, variação em R$ e em %, e a participação no faturamento nos dois meses.</li>
+                      </ul>
+                    </span>
+                  </span>
+                </div>
+                <div class="story-centro"><span class="story-mini"><span class="story-num">02</span><span class="story-pergunta">Quais categorias estão movimentando o faturamento?</span></span></div>
+                <div class="chart-card-actions">
+                  <div class="toggle-group" id="receita-categorias-variacao-toggle">
+                    <button class="toggle-btn active" data-modo="ambos">Altas e quedas</button>
+                    <button class="toggle-btn" data-modo="altas">Altas</button>
+                    <button class="toggle-btn" data-modo="quedas">Quedas</button>
+                  </div>
+                  <button class="table-toggle" data-chart="receita-categorias-variacao">Ver tabela</button>
+                </div>
+              </div>
+              <div class="chart-card-caption chart-card-caption--faturamento" id="receita-categorias-variacao-caption">Maiores altas e quedas vs. o mês anterior, em R$</div>
+              <div class="toolbar-linha">
+                <span class="toolbar-rotulo">Medir por</span>
+                <div class="toggle-group" id="receita-categorias-metrica-toggle">
+                  <button class="toggle-btn active" data-metrica="valor">Valor (R$)</button>
+                  <button class="toggle-btn" data-metrica="pct">Crescimento (%)</button>
+                  <button class="toggle-btn" data-metrica="pp">Participação (p.p.)</button>
+                </div>
+              </div>
+              <div class="chart-visual chart-visual--alto" data-visual="receita-categorias-variacao">
+                <canvas id="chart-receita-categorias-variacao"></canvas>
+              </div>
+              <div class="data-table-wrap" id="table-receita-categorias-variacao" hidden></div>
+            </div>
+          </div>
+
+          <div class="story-etapa" id="receita-etapa-3">
+            <div class="chart-card chart-card--wide">
+              <div class="chart-card-header chart-card-header--historia">
+                <div class="chart-card-header-title">
+                  <h2>Pareto de faturamento por categoria</h2>
+                  <span class="info-tip" tabindex="0">i
+                    <span class="info-tip-panel info-tip-panel--largo">
+                      <b>O que este gráfico quer dizer</b>
+                      <div class="tip-texto">Responde a uma pergunta: <b>quais categorias representam a maior parte do faturamento e por que sustentam: por volume de pedidos ou por ticket alto?</b> Complementa o gráfico anterior: aquele mostra quem <i>mudou</i>; este mostra quem <i>sustenta</i>. Os dados não trazem o nome do produto, então a análise é por categoria.</div>
+                      <b>Como ler</b>
+                      <ul>
+                        <li><b>Barras</b> — faturamento de cada uma das 20 maiores categorias do mês, da maior para a menor; o rótulo no topo de cada barra é a <b>participação</b> da categoria no faturamento total.</li>
+                        <li><b>Cor da barra</b> — o porquê: <b>azul-escuro</b>, ticket alto (o ticket da categoria é pelo menos 20% acima da média): ela pesa mais no faturamento do que nos pedidos; <b>azul-médio</b>, volume (ticket pelo menos 20% abaixo da média): ela sustenta por ter muitos pedidos; <b>azul-claro</b>, ticket na média. A legenda acima do gráfico resume as categorias que somam 80% do faturamento.</li>
+                        <li><b>Linha</b> — % acumulada do faturamento total (considerando todas as categorias, não só as 20 mostradas).</li>
+                        <li>A legenda acima do gráfico diz quantas categorias somam 50% e 80% do faturamento.</li>
+                        <li>Uma categoria pode sustentar boa parte do faturamento e estar caindo — compare com o gráfico anterior.</li>
+                      </ul>
+                    </span>
+                  </span>
+                </div>
+                <div class="story-centro"><span class="story-mini"><span class="story-num">03</span><span class="story-pergunta">Quais categorias sustentam o faturamento e como?</span></span></div>
+                <button class="table-toggle" data-chart="receita-pareto">Ver tabela</button>
+              </div>
+              <div class="chart-card-caption chart-card-caption--faturamento" id="receita-pareto-caption">Considera apenas pedidos entregues/faturados</div>
+              <div class="chart-legend">
+                <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--perfil-ticket"></span>Sustenta por ticket alto</div>
+                <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--perfil-volume"></span>Sustenta por volume de pedidos</div>
+                <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--perfil-media"></span>Ticket na média</div>
+                <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--laranja"></span>% acumulada do faturamento</div>
+              </div>
+              <div class="chart-visual chart-visual--alto" data-visual="receita-pareto">
+                <canvas id="chart-receita-pareto"></canvas>
+              </div>
+              <div class="data-table-wrap" id="table-receita-pareto" hidden></div>
+            </div>
+          </div>
+
+          <div class="story-etapa" id="receita-etapa-4">
+            <div class="chart-card chart-card--wide">
+              <div class="chart-card-header chart-card-header--historia">
+                <div class="chart-card-header-title">
+                  <h2>Cidades que mais mudaram o faturamento</h2>
+                  <span class="info-tip" tabindex="0">i
+                    <span class="info-tip-panel info-tip-panel--largo">
+                      <b>O que este gráfico quer dizer</b>
+                      <div class="tip-texto">Responde a uma pergunta: <b>quais cidades apresentaram as maiores variações de faturamento?</b> Ajuda a ver se uma mudança relevante está concentrada em poucos lugares.</div>
+                      <b>Como ler</b>
+                      <ul>
+                        <li>Cada coluna é uma cidade <b>do cliente</b> que comprou. <b>Acima de zero</b> cresceu; <b>abaixo de zero</b> caiu.</li>
+                        <li>Em <b>Medir por</b> você escolhe o que a altura representa: <b>Valor (R$)</b> — quanto o faturamento da cidade mudou em reais (o padrão); <b>Crescimento (%)</b> — a variação relativa, só para cidades com pelo menos 0,2% do faturamento em um dos dois meses (cidades muito pequenas oscilam demais); <b>Participação (p.p.)</b> — quanto a cidade ganhou ou perdeu de espaço no faturamento total, em pontos percentuais.</li>
+                        <li>Mostra 10 cidades: por padrão as 5 maiores altas e as 5 maiores quedas; os botões <b>Altas</b> e <b>Quedas</b> mostram as 10 maiores de um lado só.</li>
+                        <li>Passe o mouse para ver receita atual e anterior, variação em R$ e em %, e a participação na receita.</li>
+                      </ul>
+                    </span>
+                  </span>
+                </div>
+                <div class="story-centro"><span class="story-mini"><span class="story-num">04</span><span class="story-pergunta">Onde estão as maiores mudanças?</span></span></div>
+                <div class="chart-card-actions">
+                  <div class="toggle-group" id="receita-cidades-variacao-toggle">
+                    <button class="toggle-btn active" data-modo="ambos">Altas e quedas</button>
+                    <button class="toggle-btn" data-modo="altas">Altas</button>
+                    <button class="toggle-btn" data-modo="quedas">Quedas</button>
+                  </div>
+                  <button class="table-toggle" data-chart="receita-cidades-variacao">Ver tabela</button>
+                </div>
+              </div>
+              <div class="chart-card-caption chart-card-caption--faturamento" id="receita-cidades-variacao-caption">Maiores altas e quedas vs. o mês anterior, em R$</div>
+              <div class="toolbar-linha">
+                <span class="toolbar-rotulo">Medir por</span>
+                <div class="toggle-group" id="receita-cidades-metrica-toggle">
+                  <button class="toggle-btn active" data-metrica="valor">Valor (R$)</button>
+                  <button class="toggle-btn" data-metrica="pct">Crescimento (%)</button>
+                  <button class="toggle-btn" data-metrica="pp">Participação (p.p.)</button>
+                </div>
+              </div>
+              <div class="chart-visual chart-visual--alto" data-visual="receita-cidades-variacao">
+                <canvas id="chart-receita-cidades-variacao"></canvas>
+              </div>
+              <div class="data-table-wrap" id="table-receita-cidades-variacao" hidden></div>
+            </div>
+          </div>
+
+          <div class="story-etapa" id="receita-etapa-5">
+            <div class="story-step"><span class="story-mini"><span class="story-num">05</span><span class="story-pergunta">Como está a composição do faturamento?</span></span></div>
+            <div class="chart-legend chart-legend--centro">
+              <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--perfil-ticket"></span>Ticket alto</div>
+              <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--perfil-volume"></span>Volume de pedidos (ticket abaixo da média)</div>
+              <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--perfil-media"></span>Ticket na média</div>
+            </div>
+            <div class="chart-row-split">
+            <div class="chart-card">
+              <div class="chart-card-header">
+                <div class="chart-card-header-title">
+                  <h2>Composição por categoria</h2>
+                  <span class="info-tip" tabindex="0">i
+                    <span class="info-tip-panel">
+                      <b>O que este gráfico quer dizer</b>
+                      <div class="tip-texto">Responde a uma pergunta: <b>como o faturamento do mês se divide entre as categorias — e cada uma pesa por ticket alto ou por volume de pedidos?</b></div>
+                      <b>Como ler</b>
+                      <ul>
+                        <li>Cada barra é o faturamento de produtos da categoria no mês; o rótulo traz o valor e a <b>participação</b> no total. As 10 maiores aparecem individualmente e o restante é somado em <b>Outros</b>.</li>
+                        <li><b>Cor da barra</b> — o perfil da categoria: <b>azul-escuro</b>, ticket alto (pelo menos 20% acima do ticket médio das categorias): pesa mais no faturamento do que nos pedidos; <b>azul-médio</b>, volume (ticket pelo menos 20% abaixo da média): pesa mais pelo número de pedidos; <b>azul-claro</b>, ticket na média.</li>
+                        <li>A legenda do gráfico resume quantas das 10 maiores são de cada perfil. Passe o mouse para ver faturamento, pedidos, ticket e a diferença para a média.</li>
+                        <li>Um pedido com itens de mais de uma categoria conta uma vez em cada uma delas.</li>
+                      </ul>
+                    </span>
+                  </span>
+                </div>
+                <button class="table-toggle" data-chart="receita-comp-categorias">Ver tabela</button>
+              </div>
+              <div class="chart-card-caption chart-card-caption--faturamento" id="receita-comp-categorias-caption">Considera apenas pedidos entregues/faturados</div>
+              <div class="chart-visual chart-visual--alto" data-visual="receita-comp-categorias">
+                <canvas id="chart-receita-comp-categorias"></canvas>
+              </div>
+              <div class="data-table-wrap" id="table-receita-comp-categorias" hidden></div>
+            </div>
+            <div class="chart-card">
+              <div class="chart-card-header">
+                <div class="chart-card-header-title">
+                  <h2>Composição por cidade</h2>
+                  <span class="info-tip" tabindex="0">i
+                    <span class="info-tip-panel">
+                      <b>O que este gráfico quer dizer</b>
+                      <div class="tip-texto">Responde a uma pergunta: <b>de quais cidades vem o faturamento do mês — e cada uma pesa por ticket alto ou por volume de pedidos?</b></div>
+                      <b>Como ler</b>
+                      <ul>
+                        <li>Cada barra é o faturamento de produtos das compras de clientes daquela cidade no mês; o rótulo traz o valor e a <b>participação</b> no total. As 10 maiores aparecem individualmente e o restante é somado em <b>Outros</b>.</li>
+                        <li><b>Cor da barra</b> — o perfil da cidade: <b>azul-escuro</b>, ticket alto (pelo menos 20% acima do ticket médio geral): pesa mais no faturamento do que nos pedidos; <b>azul-médio</b>, volume (ticket pelo menos 20% abaixo da média): pesa mais pelo número de pedidos; <b>azul-claro</b>, ticket na média.</li>
+                        <li>Cidade = cidade do <b>cliente</b> que comprou. Passe o mouse para ver faturamento, pedidos, ticket e a diferença para a média.</li>
+                      </ul>
+                    </span>
+                  </span>
+                </div>
+                <button class="table-toggle" data-chart="receita-comp-cidades">Ver tabela</button>
+              </div>
+              <div class="chart-card-caption chart-card-caption--faturamento" id="receita-comp-cidades-caption">Considera apenas pedidos entregues/faturados</div>
+              <div class="chart-visual chart-visual--alto" data-visual="receita-comp-cidades">
+                <canvas id="chart-receita-comp-cidades"></canvas>
+              </div>
+              <div class="data-table-wrap" id="table-receita-comp-cidades" hidden></div>
+            </div>
+            </div>
+          </div>
+
+          <div class="story-etapa" id="receita-etapa-6">
+            <div class="chart-card chart-card--wide">
+              <div class="chart-card-header chart-card-header--historia">
+                <div class="chart-card-header-title">
+                  <h2>Como as categorias geram receita: pedidos × ticket</h2>
+                  <span class="info-tip" tabindex="0">i
+                    <span class="info-tip-panel info-tip-panel--largo">
+                      <b>O que este gráfico quer dizer</b>
+                      <div class="tip-texto">Responde a uma pergunta: <b>cada categoria gera receita por volume de pedidos ou por maior valor por pedido?</b></div>
+                      <b>Como ler</b>
+                      <ul>
+                        <li>Cada bolha é uma categoria. <b>Eixo horizontal</b> — pedidos com a categoria no mês (escala logarítmica, para caberem categorias grandes e pequenas). <b>Eixo vertical</b> — ticket médio da categoria. O tamanho da bolha é o faturamento.</li>
+                        <li>As linhas tracejadas são as <b>medianas</b> das categorias e dividem o gráfico em 4 áreas: alto volume e alto ticket (grande geração de receita); alto volume e baixo ticket (dependência de escala); baixo volume e alto ticket (poucos pedidos de maior valor); baixo volume e baixo ticket (menor contribuição).</li>
+                        <li>O nome da categoria aparece ao passar o mouse sobre a bolha, junto com receita, pedidos, ticket e participação.</li>
+                      </ul>
+                    </span>
+                  </span>
+                </div>
+                <div class="story-centro"><span class="story-mini"><span class="story-num">06</span><span class="story-pergunta">As categorias geram receita por volume ou por valor?</span></span></div>
+                <button class="table-toggle" data-chart="receita-categorias-scatter">Ver tabela</button>
+              </div>
+              <div class="chart-card-caption chart-card-caption--faturamento" id="receita-categorias-scatter-caption">Categorias do mês selecionado; considera apenas pedidos entregues/faturados</div>
+              <div class="chart-visual chart-visual--alto chart-visual--scatter" data-visual="receita-categorias-scatter">
+                <canvas id="chart-receita-categorias-scatter"></canvas>
+              </div>
+              <div class="data-table-wrap" id="table-receita-categorias-scatter" hidden></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="view-vendas" class="view">
+        <div class="page-header">
+          <h1>Vendas</h1>
+          <div class="topbar">
+            <label for="vendas-mes-selector">Período</label>
+            <select id="vendas-mes-selector"></select>
+          </div>
+        </div>
+
+        <div class="story">
+          <div class="story-etapa" id="vendas-etapa-0">
+            <div id="vendas-kpi-row" class="kpi-row">
+              <div class="kpi-card skeleton"></div>
+              <div class="kpi-card skeleton"></div>
+              <div class="kpi-card skeleton"></div>
+              <div class="kpi-card skeleton"></div>
+              <div class="kpi-card skeleton"></div>
+              <div class="kpi-card skeleton"></div>
+            </div>
+          </div>
+
+          <div class="story-etapa" id="vendas-etapa-1">
+            <div class="story-secao">Força comercial</div>
+            <div class="chart-card chart-card--wide">
+              <div class="chart-card-header chart-card-header--historia">
+                <div class="chart-card-header-title">
+                  <h2>Distribuição da geração de vendas entre os vendedores</h2>
+                  <span class="info-tip" tabindex="0">i
+                    <span class="info-tip-panel info-tip-panel--largo">
+                      <b>O que este gráfico quer dizer</b>
+                      <div class="tip-texto">Responde a uma pergunta: <b>como a geração de vendas está distribuída entre os vendedores?</b> O gráfico mostra a distribuição, sem ranking de nomes; se ela é homogênea ou se há grande diferença entre os vendedores fica por conta de quem lê.</div>
+                      <b>Como ler</b>
+                      <ul>
+                        <li>Em <b>Ver por</b> você alterna entre duas leituras da mesma distribuição.</li>
+                        <li><b>Faixa de faturamento</b> — cada barra é uma faixa de faturamento mensal do vendedor (produtos, pedidos entregues/faturados); a altura é a <b>quantidade de vendedores</b> na faixa, com a % do total.</li>
+                        <li><b>Grupos de vendedores</b> — os vendedores são ordenados do que mais vendeu para o que menos vendeu e divididos por posição (Top 5%, 5% a 10%…). As <b>barras</b> mostram, em cada grupo, a fatia do faturamento que ele gerou (escura) e a fatia de vendedores que ele representa (clara): se todos vendessem igual, as duas teriam a mesma altura. As <b>linhas</b> são acumuladas, do grupo dos 5% que mais venderam até 100% dos vendedores: laranja = faturamento acumulado, verde = pedidos acumulados e cinza tracejada = vendedores acumulados (a referência: 5%, 10%, 20%, 50%, 100%). Quanto mais as linhas de faturamento e de pedidos ficam acima da tracejada, mais concentradas estão as vendas nos primeiros grupos. Os pedidos somam os pedidos de cada vendedor: um pedido com vendedores diferentes conta em cada um.</li>
+                      </ul>
+                    </span>
+                  </span>
+                </div>
+                <div class="story-centro"><span class="story-mini"><span class="story-num">01</span><span class="story-pergunta">Como a geração de vendas está distribuída?</span></span></div>
+                <button class="table-toggle" data-chart="vendas-distribuicao">Ver tabela</button>
+              </div>
+              <div class="chart-card-caption chart-card-caption--faturamento" id="vendas-distribuicao-caption">Considera apenas pedidos entregues/faturados</div>
+              <div class="toolbar-linha">
+                <span class="toolbar-rotulo">Ver por</span>
+                <div class="toggle-group" id="vendas-distribuicao-toggle">
+                    <button class="toggle-btn active" data-modo="faixa">Faixa de faturamento</button>
+                    <button class="toggle-btn" data-modo="grupo">Grupos de vendedores</button>
+                  </div>
+              </div>
+              <div class="chart-legend" id="vendas-distribuicao-legenda" hidden>
+                <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--azul"></span>Faturamento do grupo</div>
+                <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--perfil-volume"></span>Vendedores do grupo</div>
+                <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--laranja"></span>Faturamento acumulado</div>
+                <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--verde"></span>Pedidos acumulados</div>
+                <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--line"></span>Vendedores acumulados (referência)</div>
+              </div>
+              <div class="chart-visual chart-visual--alto" data-visual="vendas-distribuicao">
+                <canvas id="chart-vendas-distribuicao"></canvas>
+              </div>
+              <div class="data-table-wrap" id="table-vendas-distribuicao" hidden></div>
+            </div>
+          </div>
+
+          <div class="story-etapa" id="vendas-etapa-2">
+            <div class="chart-card chart-card--wide">
+              <div class="chart-card-header chart-card-header--historia">
+                <div class="chart-card-header-title">
+                  <h2>Clientes atendidos × pedidos por vendedor</h2>
+                  <span class="info-tip" tabindex="0">i
+                    <span class="info-tip-panel info-tip-panel--largo">
+                      <b>O que este gráfico quer dizer</b>
+                      <div class="tip-texto">Responde a uma pergunta: <b>como os vendedores se diferenciam em volume de clientes e vendas?</b> Cada bolha é um vendedor, sem lista de nomes.</div>
+                      <b>Como ler</b>
+                      <ul>
+                        <li>Em <b>Ver por</b> você escolhe a leitura. <b>Perfis de atuação</b> (padrão) — os vendedores são separados em 4 perfis, comparando cada um com a <b>mediana</b> dos vendedores em clientes atendidos e em pedidos no mês: muitos (acima da mediana) ou poucos (na mediana ou abaixo). Cada quadro mostra quantos vendedores estão no perfil e a fatia do faturamento que eles geram. As <b>duas barras empilhadas</b> no topo comparam a composição dos vendedores com a composição do faturamento: se um perfil ocupa mais espaço na barra do faturamento do que na dos vendedores, ele concentra vendas. Em cada quadro, o número em <b>×</b> é a fatia do faturamento dividida pela fatia de vendedores (1× = proporcional; acima de 1×, o perfil pesa mais no faturamento do que em número de vendedores).</li>
+                        <li><b>Maiores vendedores</b> — Pareto dos 20 vendedores que mais faturaram no mês: cada barra é um vendedor (código encurtado + estado), do maior para o menor, e o rótulo é a fatia dele no faturamento do mês; a <b>linha laranja</b> é a % acumulada do faturamento do mês, isto é, quanto os N maiores geram juntos. Passe o mouse para ver clientes atendidos, pedidos e ticket médio de cada um.</li>
+                        <li>Os <b>quadros acima do gráfico</b> respondem à pergunta &quot;as vendas estão concentradas, e quanto?&quot;: quanto do faturamento do mês os 10%, 20% e 50% de vendedores que mais faturam respondem, comparado com a distribuição igual (10%, 20% e 50%), e o índice de Gini (0 = todos iguais, 1 = um só concentra tudo). No modo Maiores vendedores, mostram também a fatia dos 20 vendedores do gráfico.</li>
+                        <li>Os perfis são: muitos clientes e muitos pedidos; muitos clientes e poucos pedidos; poucos clientes e muitos pedidos; poucos clientes e poucos pedidos. </li>
+                        <li>Nas bolhas, as linhas tracejadas são as medianas de todos os vendedores; passe o mouse para ver o vendedor (código encurtado + estado), clientes, pedidos, faturamento e ticket médio.</li>
+                      </ul>
+                    </span>
+                  </span>
+                </div>
+                <div class="story-centro"><span class="story-mini"><span class="story-num">02</span><span class="story-pergunta">Como os vendedores estão performando entre si?</span></span></div>
+                <button class="table-toggle" data-chart="vendas-padroes">Ver tabela</button>
+              </div>
+              <div class="chart-card-caption chart-card-caption--faturamento" id="vendas-padroes-caption">Considera apenas pedidos entregues/faturados</div>
+              <div class="toolbar-linha">
+                <span class="toolbar-rotulo">Ver por</span>
+                <div class="toggle-group" id="vendas-padroes-toggle">
+                    <button class="toggle-btn active" data-modo="grade">Perfis de atuação</button>
+                    <button class="toggle-btn" data-modo="bolhas">Maiores vendedores</button>
+                  </div>
+              </div>
+              <div class="conc-chips" id="vendas-padroes-conc"></div>
+              <div class="chart-legend" id="vendas-padroes-legenda" hidden>
+                <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--azul"></span>Faturamento do vendedor (rótulo: % do faturamento do mês)</div>
+                <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--laranja"></span>% acumulada do faturamento do mês</div>
+              </div>
+              <div class="chart-visual chart-visual--alto" data-visual="vendas-padroes">
+                <canvas id="chart-vendas-padroes"></canvas>
+                <div class="heatmap-wrap" id="vendas-padroes-grade" hidden></div>
+              </div>
+              <div class="data-table-wrap" id="table-vendas-padroes" hidden></div>
+            </div>
+          </div>
+
+          <div class="story-etapa" id="vendas-etapa-3">
+            <div class="chart-card chart-card--wide">
+              <div class="chart-card-header chart-card-header--historia">
+                <div class="chart-card-header-title">
+                  <h2>Tamanho e concentração da carteira dos vendedores</h2>
+                  <span class="info-tip" tabindex="0">i
+                    <span class="info-tip-panel info-tip-panel--largo">
+                      <b>O que este gráfico quer dizer</b>
+                      <div class="tip-texto">Responde a uma pergunta: <b>como está distribuída a carteira de clientes entre os vendedores?</b> Carteira = clientes distintos atendidos pelo vendedor nos últimos 12 meses.</div>
+                      <b>Como ler</b>
+                      <ul>
+                        <li>Cada coluna é uma faixa de tamanho de carteira; a altura é a <b>quantidade de vendedores</b>, e o número no topo é o total da faixa.</li>
+                        <li>As camadas de cor mostram a <b>concentração da carteira</b>: quanto o maior cliente representa no faturamento do vendedor (quanto mais escura a camada, maior a concentração). "Cliente único" é o vendedor com um cliente só.</li>
+                        <li>Passe o mouse para ver a quantidade de vendedores em cada camada.</li>
+                      </ul>
+                    </span>
+                  </span>
+                </div>
+                <div class="story-centro"><span class="story-mini"><span class="story-num">03</span><span class="story-pergunta">Como as carteiras de clientes estão distribuídas?</span></span></div>
+                <button class="table-toggle" data-chart="vendas-carteira">Ver tabela</button>
+              </div>
+              <div class="chart-card-caption chart-card-caption--faturamento" id="vendas-carteira-caption">Últimos 12 meses; considera apenas pedidos entregues/faturados</div>
+              <div class="chart-legend">
+                <div class="chart-legend-item"><span class="chart-legend-swatch " style="background: rgba(17,26,101,0.30)"></span>Maior cliente até 25%</div>
+                <div class="chart-legend-item"><span class="chart-legend-swatch " style="background: rgba(17,26,101,0.55)"></span>Maior cliente de 25% a 50%</div>
+                <div class="chart-legend-item"><span class="chart-legend-swatch " style="background: rgba(17,26,101,0.80)"></span>Maior cliente acima de 50%</div>
+                <div class="chart-legend-item"><span class="chart-legend-swatch " style="background: rgba(17,26,101,1)"></span>Cliente único</div>
+              </div>
+              <div class="chart-visual chart-visual--curto" data-visual="vendas-carteira">
+                <canvas id="chart-vendas-carteira"></canvas>
+              </div>
+              <div class="data-table-wrap" id="table-vendas-carteira" hidden></div>
+            </div>
+          </div>
+
+          <div class="story-etapa" id="vendas-etapa-4">
+            <div class="story-secao">Mercado</div>
+            <div class="chart-card chart-card--wide">
+              <div class="chart-card-header chart-card-header--historia">
+                <div class="chart-card-header-title">
+                  <h2>Frequência de compra × intervalo entre compras</h2>
+                  <span class="info-tip" tabindex="0">i
+                    <span class="info-tip-panel info-tip-panel--largo">
+                      <b>O que este gráfico quer dizer</b>
+                      <div class="tip-texto">Responde a uma pergunta: <b>quais padrões aparecem no comportamento de compra dos clientes?</b> Olha os clientes que compraram mais de uma vez nos últimos 12 meses.</div>
+                      <b>Como ler</b>
+                      <ul>
+                        <li>Cada linha é a <b>frequência</b> (quantos pedidos o cliente fez nos últimos 12 meses) e cada coluna, o <b>intervalo médio entre as compras</b> dele, em dias.</li>
+                        <li>O número em cada célula é a quantidade de clientes; abaixo dele, a % entre os clientes que compraram mais de uma vez. <b>Quanto mais escura a célula, mais clientes.</b></li>
+                        <li>Clientes que compraram uma única vez não têm intervalo e ficam de fora da matriz.</li>
+                      </ul>
+                    </span>
+                  </span>
+                </div>
+                <div class="story-centro"><span class="story-mini"><span class="story-num">04</span><span class="story-pergunta">Como está o comportamento da base de clientes?</span></span></div>
+                
+              </div>
+              <div class="chart-card-caption chart-card-caption--faturamento" id="vendas-comportamento-caption">Últimos 12 meses; considera apenas pedidos entregues/faturados</div>
+              <div class="heatmap-wrap" id="vendas-comportamento-visual"></div>
+            </div>
+          </div>
+
+          <div class="story-etapa" id="vendas-etapa-5">
+            <div class="chart-card chart-card--wide">
+              <div class="chart-card-header chart-card-header--historia">
+                <div class="chart-card-header-title">
+                  <h2>Onde a operação vende: pedidos e clientes por mercado</h2>
+                  <span class="info-tip" tabindex="0">i
+                    <span class="info-tip-panel info-tip-panel--largo">
+                      <b>O que este gráfico quer dizer</b>
+                      <div class="tip-texto">Responde a uma pergunta: <b>como as vendas estão distribuídas entre os diferentes mercados?</b> Usa pedidos e clientes (não o valor faturado, que a página Receita &amp; Performance já explora) para dar a visão comercial.</div>
+                      <b>Como ler</b>
+                      <ul>
+                        <li>Em <b>Mercado</b> você escolhe a dimensão: Estado, Cidade, Região do Brasil ou Categoria. Em <b>Medir por</b>, pedidos ou clientes ativos.</li>
+                        <li>Cada barra é um mercado (os 10 maiores na medida escolhida); o rótulo traz o valor e a <b>participação</b> no total do mês. Passe o mouse para ver pedidos, clientes e pedidos por cliente.</li>
+                        <li>Estado, cidade e região são do <b>cliente</b> que comprou. Na categoria, um pedido com itens de categorias diferentes conta em cada uma, então as participações podem somar mais de 100%.</li>
+                      </ul>
+                    </span>
+                  </span>
+                </div>
+                <div class="story-centro"><span class="story-mini"><span class="story-num">05</span><span class="story-pergunta">Onde estão os principais mercados de venda?</span></span></div>
+                <button class="table-toggle" data-chart="vendas-mercados">Ver tabela</button>
+              </div>
+              <div class="chart-card-caption chart-card-caption--faturamento" id="vendas-mercados-caption">Considera apenas pedidos entregues/faturados</div>
+              <div class="toolbar-linha">
+                <span class="toolbar-rotulo">Mercado</span>
+                <div class="toggle-group" id="vendas-mercados-dim-toggle">
+                    <button class="toggle-btn active" data-dim="estado">Estado</button>
+                    <button class="toggle-btn" data-dim="cidade">Cidade</button>
+                    <button class="toggle-btn" data-dim="regiao">Região</button>
+                    <button class="toggle-btn" data-dim="categoria">Categoria</button>
+                  </div>
+              </div>
+              <div class="toolbar-linha">
+                <span class="toolbar-rotulo">Medir por</span>
+                <div class="toggle-group" id="vendas-mercados-metrica-toggle">
+                    <button class="toggle-btn active" data-metrica="pedidos">Pedidos</button>
+                    <button class="toggle-btn" data-metrica="clientes">Clientes ativos</button>
+                  </div>
+              </div>
+              <div class="chart-visual chart-visual--alto" data-visual="vendas-mercados">
+                <canvas id="chart-vendas-mercados"></canvas>
+              </div>
+              <div class="data-table-wrap" id="table-vendas-mercados" hidden></div>
+            </div>
+          </div>
+
+          <div class="story-etapa" id="vendas-etapa-6">
+            <div class="chart-card chart-card--wide">
+              <div class="chart-card-header chart-card-header--historia">
+                <div class="chart-card-header-title">
+                  <h2>Pedidos por perfil de cliente: novos × recorrentes</h2>
+                  <span class="info-tip" tabindex="0">i
+                    <span class="info-tip-panel info-tip-panel--largo">
+                      <b>O que este gráfico quer dizer</b>
+                      <div class="tip-texto">Responde a uma pergunta: <b>como diferentes perfis de clientes contribuem para a geração de vendas?</b> Mostra quem está comprando, em cada grupo, separando clientes novos e recorrentes.</div>
+                      <b>Como ler</b>
+                      <ul>
+                        <li>Em <b>Perfil</b> você escolhe como agrupar os clientes: <b>Região</b> do Brasil, <b>Estado</b> ou <b>Faixa de valor do pedido</b>.</li>
+                        <li>Cada barra é um grupo; o comprimento é a quantidade de <b>pedidos</b> do mês, dividida entre clientes <b>novos</b> (primeiro pedido no mês) e <b>recorrentes</b> (já tinham comprado antes). O número no fim da barra é o total de pedidos e a % do total do mês.</li>
+                        <li>A tabela ("Ver tabela") traz clientes, pedidos, pedidos por cliente e participação de cada perfil: tamanho da base × intensidade de compra.</li>
+                      </ul>
+                    </span>
+                  </span>
+                </div>
+                <div class="story-centro"><span class="story-mini"><span class="story-num">06</span><span class="story-pergunta">Como diferentes perfis de clientes contribuem para as vendas?</span></span></div>
+                <button class="table-toggle" data-chart="vendas-perfis">Ver tabela</button>
+              </div>
+              <div class="chart-card-caption chart-card-caption--faturamento" id="vendas-perfis-caption">Considera apenas pedidos entregues/faturados</div>
+              <div class="toolbar-linha">
+                <span class="toolbar-rotulo">Perfil</span>
+                <div class="toggle-group" id="vendas-perfis-toggle">
+                    <button class="toggle-btn active" data-dim="regiao">Região</button>
+                    <button class="toggle-btn" data-dim="estado">Estado</button>
+                    <button class="toggle-btn" data-dim="faixaTicket">Faixa de valor do pedido</button>
+                  </div>
+              </div>
+              <div class="chart-legend">
+                <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--perfil-ticket"></span>Clientes novos</div>
+                <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--perfil-media"></span>Clientes recorrentes</div>
+              </div>
+              <div class="chart-visual chart-visual--alto" data-visual="vendas-perfis">
+                <canvas id="chart-vendas-perfis"></canvas>
+              </div>
+              <div class="data-table-wrap" id="table-vendas-perfis" hidden></div>
+            </div>
+          </div>
+
+          <div class="story-etapa" id="vendas-etapa-7">
+            <div class="story-secao">Estrutura</div>
+            <div class="chart-card chart-card--wide">
+              <div class="chart-card-header chart-card-header--historia">
+                <div class="chart-card-header-title">
+                  <h2>Curva de concentração do resultado comercial</h2>
+                  <span class="info-tip" tabindex="0">i
+                    <span class="info-tip-panel info-tip-panel--largo">
+                      <b>O que este gráfico quer dizer</b>
+                      <div class="tip-texto">Responde a uma pergunta: <b>quanto do resultado comercial está associado a uma parcela dos vendedores, clientes, categorias ou estados?</b> Um único gráfico com seletor de dimensão.</div>
+                      <b>Como ler</b>
+                      <ul>
+                        <li>Em <b>Analisar por</b> você escolhe a dimensão: Vendedor, Cliente, Categoria ou Estado do cliente.</li>
+                        <li><b>Eixo horizontal</b> — % acumulada dos elementos, do maior para o menor. <b>Eixo vertical</b> — % acumulada do faturamento do mês. A linha tracejada é a referência de distribuição igual (todos com o mesmo faturamento): quanto mais a curva se afasta dela, mais concentrado é o resultado.</li>
+                        <li>Os rótulos da curva mostram o que os 10%, 20% e 50% maiores respondem. O gráfico mostra o grau de dependência, sem dizer se é bom ou ruim.</li>
+                      </ul>
+                    </span>
+                  </span>
+                </div>
+                <div class="story-centro"><span class="story-mini"><span class="story-num">07</span><span class="story-pergunta">Quão concentrado está o resultado comercial?</span></span></div>
+                <button class="table-toggle" data-chart="vendas-concentracao">Ver tabela</button>
+              </div>
+              <div class="chart-card-caption chart-card-caption--faturamento" id="vendas-concentracao-caption">Considera apenas pedidos entregues/faturados</div>
+              <div class="toolbar-linha">
+                <span class="toolbar-rotulo">Analisar por</span>
+                <div class="toggle-group" id="vendas-concentracao-toggle">
+                    <button class="toggle-btn active" data-dim="vendedor">Vendedor</button>
+                    <button class="toggle-btn" data-dim="cliente">Cliente</button>
+                    <button class="toggle-btn" data-dim="categoria">Categoria</button>
+                    <button class="toggle-btn" data-dim="estado">Estado do cliente</button>
+                  </div>
+              </div>
+              <div class="chart-legend">
+                <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--azul"></span>% acumulada do faturamento</div>
+                <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--line"></span>Distribuição igual (referência)</div>
+              </div>
+              <div class="chart-visual chart-visual--alto" data-visual="vendas-concentracao">
+                <canvas id="chart-vendas-concentracao"></canvas>
+              </div>
+              <div class="data-table-wrap" id="table-vendas-concentracao" hidden></div>
+            </div>
+          </div>
+
+          <div class="story-etapa" id="vendas-etapa-8">
+            <div class="story-secao">Diagnóstico</div>
+            <div class="chart-card chart-card--wide">
+              <div class="chart-card-header chart-card-header--historia">
+                <div class="chart-card-header-title">
+                  <h2>Painel de sinais comerciais</h2>
+                  <span class="info-tip" tabindex="0">i
+                    <span class="info-tip-panel info-tip-panel--largo">
+                      <b>O que este gráfico quer dizer</b>
+                      <div class="tip-texto">Responde a uma pergunta: <b>onde estão os principais pontos para investigação comercial?</b> Resume, em uma tabela, os sinais que os gráficos acima sugerem.</div>
+                      <b>Como ler</b>
+                      <ul>
+                        <li>Cada linha é um sinal calculado a partir dos dados da página, com a dimensão, o indicador do mês e uma referência.</li>
+                        <li><b>Investigar</b>, <b>Atenção</b> e <b>Monitorar</b> indicam o quão distante o indicador está de limiares definidos em código (configuráveis em <b>VENDAS_SINAIS</b>, no JavaScript). <b>Sem alerta</b> significa que o indicador está dentro do esperado por essas regras.</li>
+                        <li>Os <b>cards</b> mostram os 6 sinais de maior gravidade; <b>Ver tabela</b> traz todos, com a mesma ordem.</li>
+                        <li>Os sinais mostram onde olhar, não o que fazer nem a causa: são associações observadas nos dados do mês.</li>
+                      </ul>
+                    </span>
+                  </span>
+                </div>
+                <div class="story-centro"><span class="story-mini"><span class="story-num">08</span><span class="story-pergunta">Onde estão os principais pontos para investigação comercial?</span></span></div>
+                <button class="table-toggle" data-chart="vendas-sinais">Ver tabela</button>
+              </div>
+              <div class="chart-card-caption chart-card-caption--faturamento" id="vendas-sinais-caption">Sinais calculados a partir dos gráficos desta página</div>
+              <div class="chart-visual chart-visual--auto" data-visual="vendas-sinais">
+                <div class="sinais-grade" id="vendas-sinais-cards"></div>
+              </div>
+              <div class="data-table-wrap" id="table-vendas-sinais" hidden></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="view-logistica" class="view">
+        <div class="page-header">
+          <h1>Logística</h1>
+          <div class="topbar">
+            <label for="logistica-mes-selector">Período</label>
+            <select id="logistica-mes-selector"></select>
+          </div>
+        </div>
+
+        <div class="story">
+          <div class="story-etapa" id="logistica-etapa-1">
+            <div class="story-secao">Resultado</div>
+            <div id="logistica-kpi-row" class="kpi-row">
+              <div class="kpi-card skeleton"></div>
+              <div class="kpi-card skeleton"></div>
+              <div class="kpi-card skeleton"></div>
+              <div class="kpi-card skeleton"></div>
+              <div class="kpi-card skeleton"></div>
+              <div class="kpi-card skeleton"></div>
+            </div>
+            <div class="chart-card chart-card--wide">
+              <div class="chart-card-header chart-card-header--historia">
+                <div class="chart-card-header-title">
+                  <h2>Evolução da operação: volume, velocidade e cumprimento</h2>
+                  <span class="info-tip" tabindex="0">i
+                    <span class="info-tip-panel info-tip-panel--largo">
+                      <b>O que este gráfico quer dizer</b>
+                      <div class="tip-texto">Responde a uma pergunta: <b>a operação está ficando mais rápida ou mais lenta, e isso acompanha o volume?</b> As colunas mostram o volume de pedidos de cada mês; as linhas mudam com o botão.</div>
+                      <b>Como ler</b>
+                      <ul>
+                        <li>As <b>colunas</b> são os pedidos do mês (todos os status) e servem de contexto nas duas leituras.</li>
+                        <li>Em <b>Ver</b>, <b>Tempo</b> mostra a mediana (metade dos pedidos chega mais rápido) e o P90 (9 em cada 10 pedidos chegam nesse prazo), em dias, do pedido até o cliente. <b>Cumprimento</b> mostra a % de pedidos entregues na data estimada ou antes.</li>
+                        <li>Os tempos e o cumprimento consideram só pedidos <b>entregues</b>. O ponto maior é o mês selecionado.</li>
+                      </ul>
+                    </span>
+                  </span>
+                </div>
+                <div class="story-centro"><span class="story-mini"><span class="story-num">01</span><span class="story-pergunta">Como a operação está evoluindo?</span></span></div>
+                <button class="table-toggle" data-chart="logistica-evolucao">Ver tabela</button>
+              </div>
+              <div class="chart-card-caption chart-card-caption--faturamento" id="logistica-evolucao-caption"></div>
+              <div class="toolbar-linha">
+                <span class="toolbar-rotulo">Ver</span>
+                <div class="toggle-group" id="logistica-evolucao-toggle">
+                    <button class="toggle-btn active" data-modo="tempo">Tempo</button>
+                    <button class="toggle-btn" data-modo="cumprimento">Cumprimento</button>
+                  </div>
+              </div>
+              <div class="chart-legend" id="logistica-evolucao-legenda">
+                <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--perfil-media"></span>Pedidos do mês</div>
+                <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--azul"></span>Mediana do tempo total (dias)</div>
+                <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--laranja"></span>P90 do tempo total (dias)</div>
+              </div>
+              <div class="chart-visual chart-visual--alto" data-visual="logistica-evolucao">
+                <canvas id="chart-logistica-evolucao"></canvas>
+              </div>
+              <div class="data-table-wrap" id="table-logistica-evolucao" hidden></div>
+            </div>
+          </div>
+
+          <div class="story-etapa" id="logistica-etapa-2">
+            <div class="story-secao">Promessa e processo</div>
+            <div class="story-step"><span class="story-mini"><span class="story-num">02</span><span class="story-pergunta">Estamos cumprindo o que prometemos?</span></span></div>
+            <div class="chart-row-split">
+              <div class="chart-card">
+                <div class="chart-card-header">
+                  <div class="chart-card-header-title">
+                    <h2>Entrega real × data estimada</h2>
+                    <span class="info-tip" tabindex="0">i
+                    <span class="info-tip-panel">
+                      <b>O que este gráfico quer dizer</b>
+                      <div class="tip-texto">Responde, junto com o gráfico ao lado, a pergunta: <b>estamos cumprindo o que prometemos?</b></div>
+                      <b>Como ler</b>
+                      <ul>
+                        <li>Cada barra é uma faixa do <b>desvio</b> = data real de entrega − data estimada: negativo é antes do prazo, zero é no dia previsto e positivo é atraso.</li>
+                        <li>As faixas à direita mostram a intensidade dos atrasos: de 1 a 3 dias até mais de 7.</li>
+                        <li>A <b>linha verde</b> é a % acumulada dos pedidos, da entrega mais antecipada até a mais atrasada: mostra quanto dos pedidos chega até cada faixa.</li>
+                      </ul>
+                    </span>
+                  </span>
+                  </div>
+                  <button class="table-toggle" data-chart="logistica-desvio">Ver tabela</button>
+                </div>
+                <div class="chart-card-caption chart-card-caption--faturamento" id="logistica-desvio-caption"></div>
+                <div class="chart-legend">
+                  <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--perfil-media"></span>Pedidos entregues</div>
+                  <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--verde"></span>% acumulada dos pedidos</div>
+                </div>
+                <div class="chart-visual chart-visual--alto" data-visual="logistica-desvio">
+                  <canvas id="chart-logistica-desvio"></canvas>
+                </div>
+                <div class="data-table-wrap" id="table-logistica-desvio" hidden></div>
+              </div>
+              <div class="chart-card">
+                <div class="chart-card-header">
+                  <div class="chart-card-header-title">
+                    <h2>Prazo prometido × tempo realizado, por região</h2>
+                    <span class="info-tip" tabindex="0">i
+                    <span class="info-tip-panel">
+                      <b>O que este gráfico quer dizer</b>
+                      <div class="tip-texto">Compara o prazo prometido na compra com o tempo que a entrega levou de fato, em cada região do cliente.</div>
+                      <b>Como ler</b>
+                      <ul>
+                        <li>Para cada região, a barra clara é o prazo prometido médio e a escura, o tempo realizado médio (pedido → cliente), em dias.</li>
+                        <li>A diferença entre as duas é a <b>folga</b> do prazo: quanto mais distantes, mais folgada é a promessa.</li>
+                      </ul>
+                    </span>
+                  </span>
+                  </div>
+                  <button class="table-toggle" data-chart="logistica-folga">Ver tabela</button>
+                </div>
+                <div class="chart-card-caption chart-card-caption--faturamento" id="logistica-folga-caption"></div>
+              <div class="chart-legend">
+                <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--perfil-media"></span>Prazo prometido (dias)</div>
+                <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--azul"></span>Tempo realizado (dias)</div>
+              </div>
+                <div class="chart-visual chart-visual--alto" data-visual="logistica-folga">
+                  <canvas id="chart-logistica-folga"></canvas>
+                </div>
+                <div class="data-table-wrap" id="table-logistica-folga" hidden></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="story-etapa" id="logistica-etapa-3">
+            <div class="story-step"><span class="story-mini"><span class="story-num">03</span><span class="story-pergunta">Onde está o gargalo do processo?</span></span></div>
+            <div class="chart-row-split">
+              <div class="chart-card">
+                <div class="chart-card-header">
+                  <div class="chart-card-header-title">
+                    <h2>Tempo em cada etapa: no prazo × atrasados</h2>
+                    <span class="info-tip" tabindex="0">i
+                    <span class="info-tip-panel">
+                      <b>O que este gráfico quer dizer</b>
+                      <div class="tip-texto">Responde, junto com o gráfico ao lado, a pergunta: <b>onde está o gargalo do processo?</b> O ciclo é pedido → aprovação → envio → transporte → entrega.</div>
+                      <b>Como ler</b>
+                      <ul>
+                        <li>Cada grupo de barras é uma etapa; a barra escura é o tempo médio nos pedidos <b>atrasados</b> e a clara nos pedidos <b>no prazo</b>.</li>
+                        <li>A etapa em que as duas barras mais se afastam é a que mais acompanha o atraso. É uma associação observada: não há prazo por etapa nos dados, então não dá para dizer em qual etapa o atraso nasceu.</li>
+                      </ul>
+                    </span>
+                  </span>
+                  </div>
+                  <button class="table-toggle" data-chart="logistica-etapas">Ver tabela</button>
+                </div>
+                <div class="chart-card-caption chart-card-caption--faturamento" id="logistica-etapas-caption"></div>
+              <div class="chart-legend">
+                <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--perfil-media"></span>Pedidos no prazo (dias)</div>
+                <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--azul"></span>Pedidos atrasados (dias)</div>
+              </div>
+                <div class="chart-visual chart-visual--alto" data-visual="logistica-etapas">
+                  <canvas id="chart-logistica-etapas"></canvas>
+                </div>
+                <div class="data-table-wrap" id="table-logistica-etapas" hidden></div>
+              </div>
+              <div class="chart-card">
+                <div class="chart-card-header">
+                  <div class="chart-card-header-title">
+                    <h2>Distribuição do tempo total de entrega</h2>
+                    <span class="info-tip" tabindex="0">i
+                    <span class="info-tip-panel">
+                      <b>O que este gráfico quer dizer</b>
+                      <div class="tip-texto">Mostra como os pedidos se distribuem pelo tempo total (pedido → cliente), incluindo a cauda de pedidos muito demorados.</div>
+                      <b>Como ler</b>
+                      <ul>
+                        <li>Cada barra é uma faixa de dias; a altura é a quantidade de pedidos entregues e o rótulo traz a quantidade e a % do total.</li>
+                        <li>A <b>linha verde</b> é a % acumulada dos pedidos: quanto dos pedidos chega até cada faixa de dias. A mediana e o P90 do mês estão marcados nas barras e nos KPIs.</li>
+                      </ul>
+                    </span>
+                  </span>
+                  </div>
+                  <button class="table-toggle" data-chart="logistica-tempo">Ver tabela</button>
+                </div>
+                <div class="chart-card-caption chart-card-caption--faturamento" id="logistica-tempo-caption"></div>
+                <div class="chart-legend">
+                  <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--perfil-media"></span>Pedidos entregues</div>
+                  <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--verde"></span>% acumulada dos pedidos</div>
+                </div>
+                <div class="chart-visual chart-visual--alto" data-visual="logistica-tempo">
+                  <canvas id="chart-logistica-tempo"></canvas>
+                </div>
+                <div class="data-table-wrap" id="table-logistica-tempo" hidden></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="story-etapa" id="logistica-etapa-4">
+            <div class="story-secao">Onde</div>
+            <div class="chart-card chart-card--wide">
+              <div class="chart-card-header chart-card-header--historia">
+                <div class="chart-card-header-title">
+                  <h2>Onde a operação vai melhor e pior</h2>
+                  <span class="info-tip" tabindex="0">i
+                    <span class="info-tip-panel info-tip-panel--largo">
+                      <b>O que este gráfico quer dizer</b>
+                      <div class="tip-texto">Responde a uma pergunta: <b>em quais mercados e por quais rotas a operação vai melhor ou pior?</b> Um único espaço com dois botões: o mercado e as rotas.</div>
+                      <b>Como ler</b>
+                      <ul>
+                        <li>Em <b>Ver por</b>, <b>Mercado</b> mostra colunas de volume de pedidos entregues e uma linha com a métrica escolhida (tempo total médio ou % entregue no prazo); em <b>Mercado</b> e <b>Medir por</b> você escolhe a dimensão (estado, cidade, região, categoria, faixa de valor ou itens) e a métrica. Mostra os 10 maiores em volume, com pelo menos 30 pedidos.</li>
+                        <li><b>Rotas</b> mostra a matriz estado do <b>vendedor</b> (linhas) → estado do <b>cliente</b> (colunas): cada célula traz a métrica da rota e o volume; rotas com menos de 30 pedidos ficam vazias. Os quadros comparam pedidos dentro do mesmo estado com pedidos entre estados.</li>
+                        <li>Estado, cidade e região são do <b>cliente</b>. Na categoria e nas rotas, um pedido com itens de categorias ou vendedores diferentes conta em cada um.</li>
+                      </ul>
+                    </span>
+                  </span>
+                </div>
+                <div class="story-centro"><span class="story-mini"><span class="story-num">04</span><span class="story-pergunta">Onde a operação vai melhor e pior?</span></span></div>
+                <button class="table-toggle" data-chart="logistica-onde">Ver tabela</button>
+              </div>
+              <div class="chart-card-caption chart-card-caption--faturamento" id="logistica-onde-caption"></div>
+              <div class="toolbar-linha">
+                <span class="toolbar-rotulo">Ver por</span>
+                <div class="toggle-group" id="logistica-onde-modo-toggle">
+                    <button class="toggle-btn active" data-modo="mercado">Mercado</button>
+                    <button class="toggle-btn" data-modo="rotas">Rotas</button>
+                  </div>
+              </div>
+              <div class="toolbar-linha" id="logistica-onde-dim">
+                <span class="toolbar-rotulo">Mercado</span>
+                <div class="toggle-group" id="logistica-onde-dim-toggle">
+                    <button class="toggle-btn active" data-dim="estado">Estado</button>
+                    <button class="toggle-btn" data-dim="cidade">Cidade</button>
+                    <button class="toggle-btn" data-dim="regiao">Região</button>
+                    <button class="toggle-btn" data-dim="categoria">Categoria</button>
+                    <button class="toggle-btn" data-dim="valor">Faixa de valor</button>
+                    <button class="toggle-btn" data-dim="itens">Itens no pedido</button>
+                  </div>
+              </div>
+              <div class="toolbar-linha" id="logistica-onde-metrica">
+                <span class="toolbar-rotulo">Medir por</span>
+                <div class="toggle-group" id="logistica-onde-metrica-toggle">
+                    <button class="toggle-btn active" data-metrica="tempo">Tempo total médio</button>
+                    <button class="toggle-btn" data-metrica="prazo">% no prazo</button>
+                  </div>
+              </div>
+              <div class="chart-legend" id="logistica-onde-legenda">
+                <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--perfil-media"></span>Pedidos entregues (volume)</div>
+                <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--laranja"></span>Métrica escolhida</div>
+              </div>
+              <div class="conc-chips" id="logistica-onde-chips"></div>
+              <div class="chart-visual chart-visual--alto" data-visual="logistica-onde">
+                <canvas id="chart-logistica-onde"></canvas>
+                <div class="heatmap-wrap" id="logistica-rotas-visual" hidden></div>
+              </div>
+              <div class="data-table-wrap" id="table-logistica-onde" hidden></div>
+            </div>
+          </div>
+
+          <div class="story-etapa" id="logistica-etapa-5">
+            <div class="story-secao">Custo e cliente</div>
+            <div class="story-step"><span class="story-mini"><span class="story-num">05</span><span class="story-pergunta">Quanto custa entregar e o que o cliente recebe?</span></span></div>
+            <div class="chart-row-split">
+              <div class="chart-card">
+                <div class="chart-card-header">
+                  <div class="chart-card-header-title">
+                    <h2>Frete e tempo de entrega por região</h2>
+                    <span class="info-tip" tabindex="0">i
+                    <span class="info-tip-panel">
+                      <b>O que este gráfico quer dizer</b>
+                      <div class="tip-texto">Responde, junto com o gráfico ao lado, a pergunta: <b>quanto custa entregar e o que o cliente recebe?</b> Custo aqui é o <b>frete cobrado do cliente</b>, e não o custo real da operação.</div>
+                      <b>Como ler</b>
+                      <ul>
+                        <li>Para cada região, a <b>coluna</b> é o frete médio por pedido (R$) e a <b>linha</b> é o tempo total médio (dias).</li>
+                        <li>Mostra onde o frete é mais alto e se isso acompanha um prazo maior ou menor.</li>
+                      </ul>
+                    </span>
+                  </span>
+                  </div>
+                  <button class="table-toggle" data-chart="logistica-custo">Ver tabela</button>
+                </div>
+                <div class="chart-card-caption chart-card-caption--faturamento" id="logistica-custo-caption"></div>
+              <div class="chart-legend">
+                <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--perfil-media"></span>Frete médio por pedido (R$)</div>
+                <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--laranja"></span>Tempo total médio (dias)</div>
+              </div>
+                <div class="chart-visual chart-visual--alto" data-visual="logistica-custo">
+                  <canvas id="chart-logistica-custo"></canvas>
+                </div>
+                <div class="data-table-wrap" id="table-logistica-custo" hidden></div>
+              </div>
+              <div class="chart-card">
+                <div class="chart-card-header">
+                  <div class="chart-card-header-title">
+                    <h2>Nota do cliente por nível de cumprimento</h2>
+                    <span class="info-tip" tabindex="0">i
+                    <span class="info-tip-panel">
+                      <b>O que este gráfico quer dizer</b>
+                      <div class="tip-texto">Mostra a nota que os clientes dão conforme a entrega foi no prazo ou atrasada, e o quanto isso muda.</div>
+                      <b>Como ler</b>
+                      <ul>
+                        <li>Cada coluna é um nível de cumprimento (no prazo ou faixas de atraso); a altura é a <b>nota média</b> das avaliações dos últimos 12 meses e a linha, a % de notas 1 ou 2.</li>
+                        <li>É uma associação observada nos dados, não a prova de que o atraso causou a nota.</li>
+                      </ul>
+                    </span>
+                  </span>
+                  </div>
+                  <button class="table-toggle" data-chart="logistica-impacto">Ver tabela</button>
+                </div>
+                <div class="chart-card-caption chart-card-caption--faturamento" id="logistica-impacto-caption"></div>
+              <div class="chart-legend">
+                <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--azul"></span>Nota média</div>
+                <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--laranja"></span>% de notas 1 ou 2</div>
+              </div>
+                <div class="chart-visual chart-visual--alto" data-visual="logistica-impacto">
+                  <canvas id="chart-logistica-impacto"></canvas>
+                </div>
+                <div class="data-table-wrap" id="table-logistica-impacto" hidden></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="story-etapa" id="logistica-etapa-6">
+            <div class="chart-card chart-card--wide">
+              <div class="chart-card-header chart-card-header--historia">
+                <div class="chart-card-header-title">
+                  <h2>Pedidos parados e pedidos perdidos</h2>
+                  <span class="info-tip" tabindex="0">i
+                    <span class="info-tip-panel info-tip-panel--largo">
+                      <b>O que este gráfico quer dizer</b>
+                      <div class="tip-texto">Responde a uma pergunta: <b>há pedidos parados agora?</b> Dois botões: o que ainda está em andamento e o que já se perdeu (cancelados e indisponíveis).</div>
+                      <b>Como ler</b>
+                      <ul>
+                        <li><b>Em andamento</b> — pedidos enviados, processando, faturados, aprovados ou criados, por <b>idade</b> (dias desde o pedido até a data mais recente da base), divididos por status. É uma foto da base, não do mês selecionado.</li>
+                        <li><b>Cancelados e indisponíveis</b> — quantidade de pedidos cancelados e com produto indisponível, mês a mês.</li>
+                        <li>Quanto mais velho o pedido em andamento, maior o risco de virar atraso.</li>
+                      </ul>
+                    </span>
+                  </span>
+                </div>
+                <div class="story-centro"><span class="story-mini"><span class="story-num">06</span><span class="story-pergunta">Há pedidos parados agora?</span></span></div>
+                <button class="table-toggle" data-chart="logistica-parados">Ver tabela</button>
+              </div>
+              <div class="chart-card-caption chart-card-caption--faturamento" id="logistica-parados-caption"></div>
+              <div class="toolbar-linha">
+                <span class="toolbar-rotulo">Ver</span>
+                <div class="toggle-group" id="logistica-parados-toggle">
+                    <button class="toggle-btn active" data-modo="andamento">Em andamento</button>
+                    <button class="toggle-btn" data-modo="perdidos">Cancelados e indisponíveis</button>
+                  </div>
+              </div>
+              <div class="chart-legend" id="logistica-parados-legenda">
+
+              </div>
+              <div class="chart-visual chart-visual--curto" data-visual="logistica-parados">
+                <canvas id="chart-logistica-parados"></canvas>
+              </div>
+              <div class="data-table-wrap" id="table-logistica-parados" hidden></div>
+            </div>
+          </div>
+
+          <div class="story-etapa" id="logistica-etapa-7">
+            <div class="story-secao">Diagnóstico</div>
+            <div class="chart-card chart-card--wide">
+              <div class="chart-card-header chart-card-header--historia">
+                <div class="chart-card-header-title">
+                  <h2>Painel de sinais logísticos</h2>
+                  <span class="info-tip" tabindex="0">i
+                    <span class="info-tip-panel info-tip-panel--largo">
+                      <b>O que este gráfico quer dizer</b>
+                      <div class="tip-texto">Responde a uma pergunta: <b>onde estão os principais pontos para investigação logística?</b> Resume os sinais que os gráficos acima sugerem.</div>
+                      <b>Como ler</b>
+                      <ul>
+                        <li>Cada card ou linha é um sinal calculado com os dados da página, com a dimensão, o indicador do mês e uma referência.</li>
+                        <li><b>Investigar</b>, <b>Atenção</b> e <b>Monitorar</b> indicam o quão distante o indicador está de limiares definidos em código (configuráveis em <b>LOGISTICA_SINAIS</b>, no JavaScript; eles são provisórios até o time de logística definir as metas). <b>Sem alerta</b> significa dentro do esperado por essas regras.</li>
+                        <li>Os cards mostram os 6 sinais de maior gravidade; <b>Ver tabela</b> traz todos. Os cards grandes abaixo mostram, em cada dimensão, o mercado com a maior taxa de atraso do mês.</li>
+                        <li>Os sinais mostram onde olhar, não a causa nem o que fazer: são associações observadas nos dados do mês.</li>
+                      </ul>
+                    </span>
+                  </span>
+                </div>
+                <div class="story-centro"><span class="story-mini"><span class="story-num">07</span><span class="story-pergunta">Onde estão os principais pontos de investigação?</span></span></div>
+                <button class="table-toggle" data-chart="logistica-sinais">Ver tabela</button>
+              </div>
+              <div class="chart-visual chart-visual--auto" data-visual="logistica-sinais">
+                <div class="sinais-grade" id="logistica-sinais-cards"></div>
+                <div class="sinais-secao-titulo">Onde a taxa de atraso é maior (mercados com pelo menos 30 pedidos entregues)</div>
+                <div class="sinais-grade" id="logistica-atraso-cards"></div>
+              </div>
+              <div class="data-table-wrap" id="table-logistica-sinais" hidden></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="view-satisfacao" class="view">
+        <div class="page-header">
+          <h1>Satisfação</h1>
+          <div class="topbar">
+            <label for="satisfacao-mes-selector">Período</label>
+            <select id="satisfacao-mes-selector"></select>
+          </div>
+        </div>
+
+        <div class="story">
+          <div class="story-etapa" id="satisfacao-etapa-1">
+            <div class="story-secao">Resultado</div>
+            <div id="satisfacao-kpi-row" class="kpi-row">
+              <div class="kpi-card skeleton"></div>
+              <div class="kpi-card skeleton"></div>
+              <div class="kpi-card skeleton"></div>
+              <div class="kpi-card skeleton"></div>
+              <div class="kpi-card skeleton"></div>
+              <div class="kpi-card skeleton"></div>
+            </div>
+            <div class="chart-card chart-card--wide">
+              <div class="chart-card-header chart-card-header--historia">
+                <div class="chart-card-header-title">
+                  <h2>Evolução da satisfação</h2>
+                  <span class="info-tip" tabindex="0">i
+                    <span class="info-tip-panel info-tip-panel--largo">
+                      <b>O que este gráfico quer dizer</b>
+                      <div class="tip-texto">Responde a uma pergunta: <b>a satisfação está melhorando, estável ou piorando?</b> As colunas mostram quantas avaliações há em cada mês (mês do pedido); as linhas mudam com o botão.</div>
+                      <b>Como ler</b>
+                      <ul>
+                        <li>Em <b>Ver</b>, <b>Nota média</b> mostra a média das notas de 1 a 5. <b>Positivas × meta</b> mostra a % de avaliações positivas (nota 4 ou 5) e a meta de 95% (linha tracejada).</li>
+                        <li><b>Insatisfeita</b> = nota 1, 2 ou 3. <b>Positiva</b> = nota 4 ou 5. O mês é o mês do <b>pedido</b>, para casar com as páginas de Vendas e Logística.</li>
+                        <li>O ponto maior é o mês selecionado. Uma nota isolada diz pouco: o que importa é a direção dos últimos meses.</li>
+                      </ul>
+                    </span>
+                  </span>
+                </div>
+                <div class="story-centro"><span class="story-mini"><span class="story-num">01</span><span class="story-pergunta">Estamos melhorando ou piorando?</span></span></div>
+                <button class="table-toggle" data-chart="satisfacao-evolucao">Ver tabela</button>
+              </div>
+              <div class="chart-card-caption chart-card-caption--faturamento" id="satisfacao-evolucao-caption"></div>
+              <div class="toolbar-linha">
+                <span class="toolbar-rotulo">Ver</span>
+                <div class="toggle-group" id="satisfacao-evolucao-toggle">
+                    <button class="toggle-btn active" data-modo="nota">Nota média</button>
+                    <button class="toggle-btn" data-modo="meta">Positivas × meta</button>
+                  </div>
+              </div>
+              <div class="chart-legend" id="satisfacao-evolucao-legenda">
+
+              </div>
+              <div class="chart-visual chart-visual--alto" data-visual="satisfacao-evolucao">
+                <canvas id="chart-satisfacao-evolucao"></canvas>
+              </div>
+              <div class="data-table-wrap" id="table-satisfacao-evolucao" hidden></div>
+            </div>
+          </div>
+
+          <div class="story-etapa" id="satisfacao-etapa-2">
+            <div class="chart-card chart-card--wide">
+              <div class="chart-card-header chart-card-header--historia">
+                <div class="chart-card-header-title">
+                  <h2>Distribuição das notas</h2>
+                  <span class="info-tip" tabindex="0">i
+                    <span class="info-tip-panel info-tip-panel--largo">
+                      <b>O que este gráfico quer dizer</b>
+                      <div class="tip-texto">Responde a uma pergunta: <b>como estão distribuídas as experiências dos clientes, de 1 a 5 estrelas?</b> A média esconde a polarização: muitos clientes dão nota 5 e uma parte relevante dá nota 1.</div>
+                      <b>Como ler</b>
+                      <ul>
+                        <li>Cada grupo de barras é uma nota (1★ a 5★); a barra escura é o mês selecionado e a clara, o mês anterior. O rótulo é a % das avaliações do mês.</li>
+                        <li>Passe o mouse para ver a quantidade de avaliações em cada nota.</li>
+                      </ul>
+                    </span>
+                  </span>
+                </div>
+                <div class="story-centro"><span class="story-mini"><span class="story-num">02</span><span class="story-pergunta">Como estão distribuídas as experiências?</span></span></div>
+                <button class="table-toggle" data-chart="satisfacao-distribuicao">Ver tabela</button>
+              </div>
+              <div class="chart-card-caption chart-card-caption--faturamento" id="satisfacao-distribuicao-caption"></div>
+              <div class="chart-legend">
+                <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--azul"></span>Mês selecionado</div>
+                <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--perfil-media"></span><span id="satisfacao-distribuicao-legenda-anterior">Mês anterior</span></div>
+              </div>
+              <div class="chart-visual chart-visual--curto" data-visual="satisfacao-distribuicao">
+                <canvas id="chart-satisfacao-distribuicao"></canvas>
+              </div>
+              <div class="data-table-wrap" id="table-satisfacao-distribuicao" hidden></div>
+            </div>
+          </div>
+
+          <div class="story-etapa" id="satisfacao-etapa-3">
+            <div class="story-secao">Onde e por quê</div>
+            <div class="chart-card chart-card--wide">
+              <div class="chart-card-header chart-card-header--historia">
+                <div class="chart-card-header-title">
+                  <h2>Onde a insatisfação se concentra</h2>
+                  <span class="info-tip" tabindex="0">i
+                    <span class="info-tip-panel info-tip-panel--largo">
+                      <b>O que este gráfico quer dizer</b>
+                      <div class="tip-texto">Responde a uma pergunta: <b>em quais segmentos a insatisfação é maior?</b> Mostra a <b>taxa</b> e o volume de avaliações de cada segmento, porque 20% de insatisfeitas em 40 avaliações não pesa o mesmo que em 4 mil.</div>
+                      <b>Como ler</b>
+                      <ul>
+                        <li>Em <b>Segmento</b> você escolhe a dimensão: região, estado, cidade, categoria, faixa de valor ou itens no pedido. Em <b>Medir por</b>, a % de avaliações insatisfeitas (nota 1 a 3) ou a nota média.</li>
+                        <li>As <b>colunas</b> são o volume de avaliações e a <b>linha</b>, a métrica escolhida. Na % de insatisfeitas, a linha tracejada é a meta: no máximo 5% (o oposto dos 95% de positivas).</li>
+                        <li>Aparecem os 10 maiores em volume, com pelo menos 30 avaliações no mês. Região, estado e cidade são do <b>cliente</b>; na categoria, um pedido com itens de categorias diferentes conta em cada uma.</li>
+                      </ul>
+                    </span>
+                  </span>
+                </div>
+                <div class="story-centro"><span class="story-mini"><span class="story-num">03</span><span class="story-pergunta">Onde está a insatisfação?</span></span></div>
+                <button class="table-toggle" data-chart="satisfacao-onde">Ver tabela</button>
+              </div>
+              <div class="chart-card-caption chart-card-caption--faturamento" id="satisfacao-onde-caption"></div>
+              <div class="toolbar-linha">
+                <span class="toolbar-rotulo">Segmento</span>
+                <div class="toggle-group" id="satisfacao-onde-dim-toggle">
+                    <button class="toggle-btn active" data-dim="regiao">Região</button>
+                    <button class="toggle-btn" data-dim="estado">Estado</button>
+                    <button class="toggle-btn" data-dim="cidade">Cidade</button>
+                    <button class="toggle-btn" data-dim="categoria">Categoria</button>
+                    <button class="toggle-btn" data-dim="valor">Faixa de valor</button>
+                    <button class="toggle-btn" data-dim="itens">Itens no pedido</button>
+                  </div>
+              </div>
+              <div class="toolbar-linha">
+                <span class="toolbar-rotulo">Medir por</span>
+                <div class="toggle-group" id="satisfacao-onde-metrica-toggle">
+                    <button class="toggle-btn active" data-metrica="insatisfeitas">% insatisfeitas</button>
+                    <button class="toggle-btn" data-metrica="nota">Nota média</button>
+                  </div>
+              </div>
+              <div class="chart-legend" id="satisfacao-onde-legenda">
+
+              </div>
+              <div class="chart-visual chart-visual--alto" data-visual="satisfacao-onde">
+                <canvas id="chart-satisfacao-onde"></canvas>
+              </div>
+              <div class="data-table-wrap" id="table-satisfacao-onde" hidden></div>
+            </div>
+          </div>
+
+          <div class="story-etapa" id="satisfacao-etapa-4">
+            <div class="story-step"><span class="story-mini"><span class="story-num">04</span><span class="story-pergunta">O que está associado à percepção do cliente?</span></span></div>
+            <div class="chart-row-split">
+              <div class="chart-card">
+                <div class="chart-card-header">
+                  <div class="chart-card-header-title">
+                    <h2>Insatisfeitas por nível de prazo</h2>
+                    <span class="info-tip" tabindex="0">i
+                    <span class="info-tip-panel">
+                      <b>O que este gráfico quer dizer</b>
+                      <div class="tip-texto">Responde, junto com o gráfico ao lado, a pergunta: <b>o que está associado à percepção do cliente?</b> Compara onde estão as avaliações insatisfeitas com onde estão os pedidos avaliados.</div>
+                      <b>Como ler</b>
+                      <ul>
+                        <li>Cada grupo de barras é um nível de cumprimento do prazo (entregue no prazo ou faixas de atraso), só com pedidos entregues.</li>
+                        <li>A barra escura é a % das avaliações <b>insatisfeitas</b> que caem no nível e a clara, a % de <b>todas as avaliações</b> do nível. Se a escura é maior que a clara, o nível concentra mais insatisfação do que o seu tamanho.</li>
+                        <li>É uma associação observada, não a prova de que o atraso causou a nota.</li>
+                      </ul>
+                    </span>
+                  </span>
+                  </div>
+                  <button class="table-toggle" data-chart="satisfacao-prazo">Ver tabela</button>
+                </div>
+                <div class="chart-card-caption chart-card-caption--faturamento" id="satisfacao-prazo-caption"></div>
+              <div class="chart-legend">
+                <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--azul"></span>% das avaliações insatisfeitas</div>
+                <div class="chart-legend-item"><span class="chart-legend-swatch chart-legend-swatch--perfil-media"></span>% de todas as avaliações</div>
+              </div>
+                <div class="chart-visual chart-visual--alto" data-visual="satisfacao-prazo">
+                  <canvas id="chart-satisfacao-prazo"></canvas>
+                </div>
+                <div class="data-table-wrap" id="table-satisfacao-prazo" hidden></div>
+              </div>
+              <div class="chart-card">
+                <div class="chart-card-header">
+                  <div class="chart-card-header-title">
+                    <h2>O que os clientes insatisfeitos escrevem</h2>
+                    <span class="info-tip" tabindex="0">i
+                    <span class="info-tip-panel">
+                      <b>O que este gráfico quer dizer</b>
+                      <div class="tip-texto">Mostra os temas mais frequentes nos <b>comentários</b> das avaliações insatisfeitas do mês.</div>
+                      <b>Como ler</b>
+                      <ul>
+                        <li>Cada barra é um tema; o rótulo é a % dos comentários que o mencionam. Um comentário pode ter mais de um tema.</li>
+                        <li>Os temas são identificados por <b>palavras-chave</b> (não por leitura do texto) e só cobrem os clientes que escreveram comentário: a quantidade aparece no gráfico. Trate como um indicativo do assunto, não como contagem exata.</li>
+                      </ul>
+                    </span>
+                  </span>
+                  </div>
+                  <button class="table-toggle" data-chart="satisfacao-temas">Ver tabela</button>
+                </div>
+                <div class="chart-card-caption chart-card-caption--faturamento" id="satisfacao-temas-caption"></div>
+                <div class="chart-visual chart-visual--alto" data-visual="satisfacao-temas">
+                  <canvas id="chart-satisfacao-temas"></canvas>
+                </div>
+                <div class="data-table-wrap" id="table-satisfacao-temas" hidden></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="story-etapa" id="satisfacao-etapa-5">
+            <div class="story-secao">Impacto</div>
+            <div class="chart-card chart-card--wide">
+              <div class="chart-card-header chart-card-header--historia">
+                <div class="chart-card-header-title">
+                  <h2>Tamanho do problema</h2>
+                  <span class="info-tip" tabindex="0">i
+                    <span class="info-tip-panel info-tip-panel--largo">
+                      <b>O que este gráfico quer dizer</b>
+                      <div class="tip-texto">Responde a uma pergunta: <b>quantos clientes estão sendo afetados e o que isso representa?</b> Traduz a nota em clientes, pedidos e faturamento.</div>
+                      <b>Como ler</b>
+                      <ul>
+                        <li><b>Cliente insatisfeito</b> é o cliente com ao menos uma avaliação de nota 1, 2 ou 3 no mês; o mês é o do pedido.</li>
+                        <li><b>Faturamento associado</b> é o valor total dos pedidos que receberam avaliação insatisfeita (não é receita perdida).</li>
+                        <li>Em <b>Voltou a comprar</b>, comparamos clientes insatisfeitos e satisfeitos dos últimos 12 meses que fizeram um pedido depois do avaliado. Os números costumam ser pequenos (poucos clientes recompram) e os pedidos mais recentes ainda não tiveram tempo de se repetir, então compare os dois grupos entre si.</li>
+                      </ul>
+                    </span>
+                  </span>
+                </div>
+                <div class="story-centro"><span class="story-mini"><span class="story-num">05</span><span class="story-pergunta">Qual é o tamanho do problema?</span></span></div>
+              </div>
+              <div class="sinais-grade" id="satisfacao-impacto-cards"></div>
+            </div>
+          </div>
+
+          <div class="story-etapa" id="satisfacao-etapa-6">
+            <div class="story-secao">Cobrança</div>
+            <div class="chart-card chart-card--wide">
+              <div class="chart-card-header chart-card-header--historia">
+                <div class="chart-card-header-title">
+                  <h2>O que CX precisa explicar</h2>
+                  <span class="info-tip" tabindex="0">i
+                    <span class="info-tip-panel info-tip-panel--largo">
+                      <b>O que este gráfico quer dizer</b>
+                      <div class="tip-texto">Responde a uma pergunta: <b>o que precisa ser investigado?</b> Resume os pontos de atenção da página, com a meta de 95% de avaliações positivas como referência.</div>
+                      <b>Como ler</b>
+                      <ul>
+                        <li>Cada card ou linha é um sinal calculado com os dados da página: indicador, variação, segmento afetado e o impacto.</li>
+                        <li><b>Investigar</b>, <b>Atenção</b> e <b>Monitorar</b> indicam o quão distante o indicador está da meta ou de limiares definidos em código (<b>SATISFACAO_SINAIS</b>, no JavaScript; provisórios, exceto a meta de 95% de positivas).</li>
+                        <li>A coluna <b>Responsável / ação</b> da tabela é para ser preenchida fora do dash: os dados não trazem ações nem chamados.</li>
+                        <li>Os cards mostram os 6 sinais de maior gravidade; <b>Ver tabela</b> traz todos. São associações observadas, não causas.</li>
+                      </ul>
+                    </span>
+                  </span>
+                </div>
+                <div class="story-centro"><span class="story-mini"><span class="story-num">06</span><span class="story-pergunta">O que CX precisa explicar?</span></span></div>
+                <button class="table-toggle" data-chart="satisfacao-sinais">Ver tabela</button>
+              </div>
+              <div class="chart-visual chart-visual--auto" data-visual="satisfacao-sinais">
+                <div class="sinais-grade" id="satisfacao-sinais-cards"></div>
+              </div>
+              <div class="data-table-wrap" id="table-satisfacao-sinais" hidden></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <?!= include('JavaScript'); ?>
+</body>
+</html>
