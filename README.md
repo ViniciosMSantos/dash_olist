@@ -1,3 +1,4 @@
+<img width="1921" height="941" alt="Captura de tela 2026-09-30 123617" src="https://github.com/user-attachments/assets/5e6c1b8d-a4d8-44ad-8254-70bec209b9ab" />
 # Dashboard Olist
 
 Dashboard de operações da Olist (marketplace de e-commerce brasileiro) construído como **Google Apps Script Web
