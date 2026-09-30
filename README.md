@@ -5,6 +5,8 @@ Dashboard de operações da Olist (marketplace de e-commerce brasileiro) constru
 App**, consultando dados diretamente do Databricks. Cobre visão geral do negócio, vendas, logística/entrega e
 satisfação/avaliações dos clientes.
 
+**[🔴 Ver dashboard ao vivo](https://script.google.com/macros/s/AKfycbygFktd1khKSfrZB0dK_w9R0jw80RJuQ5Qg1ZGBkCe6mLsEObQAUn96wl5-_uQ48-cBPw/exec)**
+
 ## Estado atual do dashboard
 
 5 páginas implementadas: **Visão Geral → Receita & Performance → Vendas → Logística → Satisfação**. Cada página é
